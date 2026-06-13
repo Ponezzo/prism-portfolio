@@ -1,0 +1,31 @@
+/* AUTO-GENERATED from content/home.json — edit in Figma or home.json, then npm run apply:home */
+
+.prism-hero__wrap {
+  position: absolute;
+  right: clamp(0.5rem, 3vw, 2.5rem);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(50vw, 680px);
+  height: min(78vh, 780px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.hero-tagline {
+  top: 3rem;
+  left: 3rem;
+  max-width: 28rem;
+}
+.about-text { padding-left: 8rem; padding-right: 4rem; }
+.skills-left { width: 60%; padding-left: 8rem; padding-top: 15vh; }
+@media (max-width: 768px) {
+  .prism-hero__wrap {
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -50%);
+    width: min(92vw, 380px);
+    height: min(50vh, 440px);
+  }
+}

@@ -1,0 +1,251 @@
+/* AUTO-GENERATED from content/home.json */
+window.__HOME__ = {
+  "meta": {
+    "version": 1,
+    "figmaFileKey": "izxX8YJ16HiW3JB4sQsClp",
+    "figmaPage": "🏠 Home (Editable)",
+    "lastSyncedFromFigma": null
+  },
+  "colors": {
+    "prismCyan": "#00f0ff",
+    "prismMagenta": "#ff00aa",
+    "prismYellow": "#d4ff00",
+    "prismBg": "#0a0a0a",
+    "textPrimary": "#f0f0f0",
+    "textMuted": "rgba(255,255,255,0.2)"
+  },
+  "content": {
+    "preloader": {
+      "logo": "T",
+      "firstName": "aegeon",
+      "lastName": " Park",
+      "dot": "."
+    },
+    "hero": {
+      "taglineHtml": "Créatif discret, <span class=\"other-accent\">je donne vie</span> aux idées,<br>entre mouvement, détail et douceur.",
+      "taglinePlain": "Créatif discret, je donne vie aux idées, entre mouvement, détail et douceur.",
+      "version": "🡺V3.0",
+      "socials": [
+        {
+          "label": "Behance",
+          "href": "https://www.behance.net/lukebaffait"
+        },
+        {
+          "label": "LinkedIn",
+          "href": "https://www.linkedin.com/in/luke-baffait/"
+        },
+        {
+          "label": "GitHub",
+          "href": "https://github.com/Ponezzo"
+        }
+      ],
+      "nav": [
+        {
+          "label": "Work",
+          "href": "works/",
+          "pageLink": "work"
+        },
+        {
+          "label": "Info",
+          "href": "info/",
+          "pageLink": "info"
+        },
+        {
+          "label": "Contact",
+          "href": "contact/",
+          "pageLink": "contact"
+        }
+      ]
+    },
+    "reveal": {
+      "phrase": "Basically, I build product experiences."
+    },
+    "about": {
+      "textHtml": "기능 개수가 아니라, <span class=\"other-accent\">사용자가 체감하는 가치</span>로<br>제품을 판단하는 PM입니다.",
+      "sub": "삼성 스마트팩토리 3D 대시보드에서 AMR 위치 탐색 시간 40%·병목 40% 감소를 주도했습니다. SSAFY에서 FLIP, WakWak, Dingading을 기획·PM했고, Python과 SQLD·ADsP 자격을 보유하고 있습니다.",
+      "version": "V3.0",
+      "photoSrc": "assets/images/profile/taegeon.jpg",
+      "photoAlt": "Taegeon Park",
+      "infoLink": {
+        "label": "Info",
+        "href": "info/"
+      }
+    },
+    "skills": {
+      "subtitle": "Compétences",
+      "text": "SSAFY PM · 삼성 생기원 연계 스마트팩토리 프로젝트 · AI·커뮤니티·모바일 서비스 기획 경험",
+      "groups": [
+        {
+          "id": "frontend",
+          "title": "Frontend",
+          "open": true,
+          "items": [
+            "Vue 3",
+            "React",
+            "React Native",
+            "Next.js",
+            "JavaScript",
+            "TypeScript",
+            "HTML / CSS",
+            "Tailwind CSS"
+          ]
+        },
+        {
+          "id": "animation",
+          "title": "Animation & 3D",
+          "items": [
+            "GSAP",
+            "Lenis",
+            "Three.js",
+            "WebGL"
+          ]
+        },
+        {
+          "id": "database",
+          "title": "Bases de données",
+          "items": [
+            "MySQL",
+            "PostgreSQL",
+            "SQLite"
+          ]
+        },
+        {
+          "id": "devops",
+          "title": "DevOps & Outils",
+          "items": [
+            "Git",
+            "GitHub",
+            "Docker",
+            "Vercel",
+            "Figma",
+            "Notion"
+          ]
+        },
+        {
+          "id": "product",
+          "title": "Product & Planning",
+          "items": [
+            "Product Strategy",
+            "UX Planning",
+            "Agile / Scrum",
+            "Figma Prototyping",
+            "SQLD",
+            "ADsP"
+          ]
+        },
+        {
+          "id": "design",
+          "title": "Design",
+          "items": [
+            "Figma",
+            "Photoshop",
+            "Canva"
+          ]
+        }
+      ]
+    },
+    "footer": {
+      "email": "taegeonpark97@gmail.com",
+      "copyright": "© 2026",
+      "nameFirst": "Taegeon",
+      "nameLast": "Park",
+      "socials": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/Ponezzo"
+        }
+      ],
+      "nav": [
+        {
+          "label": "Work",
+          "href": "works/"
+        },
+        {
+          "label": "Info",
+          "href": "info/"
+        },
+        {
+          "label": "Contact",
+          "href": "contact/"
+        }
+      ]
+    },
+    "projectsPreview": {
+      "label": "Preview",
+      "cursor": "See project"
+    }
+  },
+  "projects": [
+    {
+      "id": "flip",
+      "title": "FLIP",
+      "date": "12 2025",
+      "cover": "assets/covers/flip.svg"
+    },
+    {
+      "id": "dingading",
+      "title": "Dingading",
+      "date": "08 2025",
+      "cover": "assets/covers/dingading.svg"
+    },
+    {
+      "id": "wakwak",
+      "title": "WakWak",
+      "date": "06 2025",
+      "cover": "assets/covers/wakwak.svg"
+    },
+    {
+      "id": "cinemovie",
+      "title": "CINEMovie",
+      "date": "03 2024",
+      "cover": "assets/covers/cinemovie.svg"
+    }
+  ],
+  "layout": {
+    "hero": {
+      "prismVideo": {
+        "right": "clamp(0.5rem, 3vw, 2.5rem)",
+        "top": "50%",
+        "translateY": "-50%",
+        "width": "min(50vw, 680px)",
+        "height": "min(78vh, 780px)"
+      },
+      "tagline": {
+        "top": "3rem",
+        "left": "3rem",
+        "maxWidth": "28rem"
+      }
+    },
+    "about": {
+      "text": {
+        "paddingLeft": "8rem",
+        "paddingRight": "4rem"
+      },
+      "photo": {
+        "width": "clamp(280px, 32vw, 420px)"
+      }
+    },
+    "skills": {
+      "left": {
+        "width": "60%",
+        "paddingLeft": "8rem",
+        "paddingTop": "15vh"
+      }
+    },
+    "mobile": {
+      "hero": {
+        "prismVideo": {
+          "right": "50%",
+          "top": "50%",
+          "translateX": "50%",
+          "translateY": "-50%",
+          "width": "min(92vw, 380px)",
+          "height": "min(50vh, 440px)"
+        }
+      }
+    }
+  },
+  "media": {
+    "heroVideo": "assets/hero/aeruk-prism.webm"
+  }
+};

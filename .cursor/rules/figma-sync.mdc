@@ -6,19 +6,40 @@ alwaysApply: false
 
 # Prism Portfolio — Figma Sync
 
-When the user asks to apply Figma changes to GitHub for `prism-portfolio`:
+## Figma 파일
 
-1. Read Figma file `izxX8YJ16HiW3JB4sQsClp` (Prism Theme variables + page frames)
-2. Map Figma Variables (`Prism Theme` collection) → `design/tokens.json` color keys:
-   - `color/bg` → `color.bg`
-   - `color/bg-elevated` → `color.bgElevated`
-   - `color/text` → `color.text`
-   - `color/text-muted` → `color.textMuted`
-   - `color/accent` → `color.accent`
-   - `color/accent-hot` → `color.accentHot`
-   - `color/accent-pink` → `color.accentPink`
-3. Update `content/site.json` and `content/projects.json` if page text frames changed
-4. Run `npm run apply:tokens` in `prism-portfolio/`
-5. Commit/push only when the user explicitly asks
+- **Design system + Home 편집**: https://www.figma.com/design/izxX8YJ16HiW3JB4sQsClp
+- **편집 페이지**: `🏠 Home (Editable)` → `sync/master` 프레임
+- **색상 변수**: `Prism Theme` 컬렉션
 
-User phrase examples: "Figma 토큰 변경 GitHub에 적용해줘", "Figma에서 바꾼 디자인 prism-portfolio에 적용해줘"
+## 편집 규칙 (Figma에서)
+
+| 레이어 이름 | 의미 |
+|------------|------|
+| `content/*` | 사이트 텍스트 (이름 변경 금지) |
+| `layout/*` | 배치·크기 (점선 프레임 이동/리사이즈) |
+| `content/skills.group.{id}` | 스킬 그룹 (자식: `title`, `items`) |
+| `content/projects.N.title` | 프로젝트 제목 |
+| Prism Theme 변수 | 프리즘 색상 |
+
+## 적용 절차 (사용자가 "Figma 적용해줘" 요청 시)
+
+1. `use_figma` + `scripts/figma-export-home.mjs`의 `exportCode`로 레이어 export
+2. `node scripts/merge-figma-export.mjs <export.json>` → `content/home.json` 갱신
+3. Figma Variables → `design/tokens.json` 색상 매핑:
+   - `color/accent-hot` → `color.accentHot` / `--prism-cyan`
+   - `color/accent-pink` → `color.accentPink` / `--prism-magenta`
+4. `npm run apply:all` (home CSS/JS + tokens.css 생성)
+5. 커밋/푸시는 사용자가 명시할 때만
+
+## 로컬 파일
+
+- `content/home.json` — 문구·레이아웃·색상·프로젝트 목록
+- `design/figma-map.json` — Figma 레이어 ↔ JSON 경로
+- `styles/home-generated.css` — 레이아웃 (자동 생성)
+- `js/home-generated.js` — 런타임 콘텐츠 (자동 생성)
+
+## 사용자 안내 문구
+
+> Figma에서 `🏠 Home (Editable)` 수정 후  
+> **"Figma 홈 화면 적용해줘"** 또는 **"Figma 변경 GitHub에 적용해줘"** 라고 요청

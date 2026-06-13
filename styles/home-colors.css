@@ -1,0 +1,8 @@
+:root {
+  --prism-cyan: #00f0ff;
+  --prism-magenta: #ff00aa;
+  --prism-yellow: #d4ff00;
+  --prism-bg: #0a0a0a;
+  --prism-text-primary: #f0f0f0;
+  --prism-text-muted: rgba(255,255,255,0.2);
+}

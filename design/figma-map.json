@@ -1,0 +1,48 @@
+{
+  "$schema": "./figma-map.schema.json",
+  "meta": {
+    "figmaFileKey": "izxX8YJ16HiW3JB4sQsClp",
+    "figmaUrl": "https://www.figma.com/design/izxX8YJ16HiW3JB4sQsClp",
+    "editablePage": "🏠 Home (Editable)",
+    "masterFrame": "sync/master",
+    "frameWidth": 1440,
+    "namespace": "prism-portfolio"
+  },
+  "contentLayers": {
+    "content/preloader.logo": "content.preloader.logo",
+    "content/preloader.firstName": "content.preloader.firstName",
+    "content/preloader.lastName": "content.preloader.lastName",
+    "content/hero.tagline": "content.hero.tagline",
+    "content/hero.version": "content.hero.version",
+    "content/reveal.phrase": "content.reveal.phrase",
+    "content/about.text": "content.about.text",
+    "content/about.sub": "content.about.sub",
+    "content/about.version": "content.about.version",
+    "content/skills.subtitle": "content.skills.subtitle",
+    "content/skills.text": "content.skills.text",
+    "content/footer.nameFirst": "content.footer.nameFirst",
+    "content/footer.nameLast": "content.footer.nameLast",
+    "content/footer.email": "content.footer.email",
+    "content/footer.copyright": "content.footer.copyright"
+  },
+  "layoutLayers": {
+    "layout/hero.prismVideo": "layout.hero.prismVideo",
+    "layout/hero.tagline": "layout.hero.tagline",
+    "layout/about.text": "layout.about.text",
+    "layout/about.photo": "layout.about.photo",
+    "layout/skills.left": "layout.skills.left"
+  },
+  "navLayers": {
+    "content/hero.nav.work": "content.hero.nav.work",
+    "content/hero.nav.info": "content.hero.nav.info",
+    "content/hero.nav.contact": "content.hero.nav.contact",
+    "content/hero.social.github": "content.hero.social.github"
+  },
+  "projectLayers": {
+    "content/projects.0.title": "projects.0.title",
+    "content/projects.1.title": "projects.1.title",
+    "content/projects.2.title": "projects.2.title",
+    "content/projects.3.title": "projects.3.title"
+  },
+  "skillGroupPrefix": "content/skills.group."
+}

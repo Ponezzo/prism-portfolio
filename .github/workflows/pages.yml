@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm run apply:tokens
+      - run: npm run apply:all
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

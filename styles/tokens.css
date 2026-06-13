@@ -1,10 +1,10 @@
 /* AUTO-GENERATED from design/tokens.json — do not edit by hand */
 :root {
-  --color-bg: #000000;
+  --color-bg: #0a0a0a;
   --color-bg-elevated: #050508;
   --color-surface: rgba(255,255,255,0.04);
   --color-surface-strong: rgba(255,255,255,0.08);
-  --color-text: #f2f2f7;
+  --color-text: #f0f0f0;
   --color-text-muted: #8e8e93;
   --color-border: rgba(255,255,255,0.12);
   --color-accent: #00f0ff;
