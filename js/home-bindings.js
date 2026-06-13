@@ -16,12 +16,6 @@
   function applyPreloader(c) {
     setText('preloader-logo', c.logo);
     setText('preloader-luke', c.firstName);
-    setText('preloader-baffait', c.lastName);
-    setText('preloader-dot', c.dot);
-    const nameRight = document.getElementById('preloader-name-right');
-    if (nameRight) {
-      nameRight.hidden = c.showLastName === false;
-    }
   }
 
   function applyHero(hero) {
@@ -62,6 +56,8 @@
         </div>
       </div>
     `).join('');
+
+    window.dispatchEvent(new CustomEvent('home-skills-updated'));
   }
 
   function applyProjects(projects) {
@@ -102,7 +98,10 @@
 
   function boot() {
     const home = window.__HOME__;
-    if (!home) return;
+    if (!home) {
+      console.warn('[home-bindings] window.__HOME__ missing — run npm run apply:home');
+      return;
+    }
     const c = home.content ?? home;
     applyPreloader(c.preloader ?? home.preloader);
     applyHero(c.hero ?? home.hero);
@@ -112,6 +111,7 @@
     applySkills(c.skills ?? home.skills);
     applyFooter(c.footer ?? home.footer);
     applyPreview(c.projectsPreview ?? home.projectsPreview);
+    window.dispatchEvent(new CustomEvent('home-content-ready'));
   }
 
   boot();

@@ -17,31 +17,11 @@ window.__HOME__ = {
   "content": {
     "preloader": {
       "logo": "T",
-      "firstName": "aegeon",
-      "lastName": "",
-      "dot": "",
-      "showLastName": false
+      "firstName": "aegeon"
     },
     "hero": {
       "taglineHtml": "기본적으로 사용자를 우선으로 한 기획과 개발을 합니다.",
-      "taglinePlain": "기본적으로 사용자를 우선으로 한 기획과 개발을 합니다.",
-      "nav": [
-        {
-          "label": "Work",
-          "href": "works/",
-          "pageLink": "work"
-        },
-        {
-          "label": "Info",
-          "href": "info/",
-          "pageLink": "info"
-        },
-        {
-          "label": "Contact",
-          "href": "contact/",
-          "pageLink": "contact"
-        }
-      ]
+      "taglinePlain": "기본적으로 사용자를 우선으로 한 기획과 개발을 합니다."
     },
     "reveal": {
       "phrase": "Basically, I build product experiences."

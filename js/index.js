@@ -63,11 +63,8 @@ gsap.registerPlugin(ScrollTrigger);
 const introBg = document.getElementById('intro-bg');
 const pContent = document.getElementById('preloader-content');
 const pNameLeft = document.getElementById('preloader-name-left');
-const pNameRight = document.getElementById('preloader-name-right');
 const pLogo = document.getElementById('preloader-logo');
 const pLuke = document.getElementById('preloader-luke');
-const pBaffait = document.getElementById('preloader-baffait');
-const pDot = document.getElementById('preloader-dot');
 const tPanelRed = document.getElementById('t-panel-red');
 const tPanelDark = document.getElementById('t-panel-dark');
 const hero = document.getElementById('hero');
@@ -78,9 +75,6 @@ function syncPreloaderContent() {
   if (!preloader) return;
   if (pLogo) pLogo.textContent = preloader.logo ?? 'T';
   if (pLuke) pLuke.textContent = preloader.firstName ?? '';
-  if (pBaffait) pBaffait.textContent = preloader.lastName ?? '';
-  if (pDot) pDot.textContent = preloader.dot ?? '';
-  if (pNameRight) pNameRight.hidden = preloader.showLastName === false;
 }
 
 function splitIntoChars(el) {
@@ -118,34 +112,14 @@ function getNameFontEl() {
   return pLuke || pLogo;
 }
 
-function getCharGap() {
-  return parseFloat(getComputedStyle(getNameFontEl()).fontSize) * 0.55;
+function getTotalWidth() {
+  if (!pNameLeft) return pLogo?.offsetWidth || 0;
+  return pNameLeft.offsetWidth;
 }
-
-function layoutNames() {
-  if (pContent.classList.contains('preloader-content--settled')) return;
-  const fs = parseFloat(getComputedStyle(getNameFontEl()).fontSize);
-  if (!fs || !pNameLeft || !pNameRight) return;
-  const baselineOffset = -0.06;
-  const gapPx = fs * 0.55;
-  const leftW = pNameLeft.offsetWidth;
-  pNameRight.style.left = ((leftW + gapPx) / fs) + 'em';
-  pNameRight.style.top = baselineOffset + 'em';
-}
-layoutNames();
 
 ensureIntroNameVisible();
 gsap.set(allRevealEls, { yPercent: 110 });
-
 gsap.set([pContent, tPanelRed, tPanelDark], { willChange: 'transform' });
-
-function getTotalWidth() {
-  if (!pNameLeft) return pLogo.offsetWidth;
-  if (!pNameRight || pNameRight.hidden || pNameRight.offsetParent === null) {
-    return pNameLeft.offsetWidth;
-  }
-  return pNameLeft.offsetWidth + getCharGap() + pNameRight.offsetWidth;
-}
 
 let keepIntroNameAnchored = false;
 let nameAnchorRaf = 0;
@@ -165,19 +139,17 @@ function isMobileViewport() {
 
 let _introSettledXvw = 0;
 
-function placeIntroNameAtBottom() {
+function placeIntroNameAtHeroLine() {
   nameLayer.classList.add('name-layer--settled');
   pContent.classList.add('preloader-content--settled');
-  [pNameLeft, pNameRight, pLogo, pLuke, pBaffait, pDot].forEach((el) => {
+  gsap.set(nameLayer, { autoAlpha: 1, clearProps: 'mixBlendMode' });
+  gsap.set(pContent, { x: 0, y: 0, scale: 1, clearProps: 'transform' });
+  [pLogo, pLuke].forEach((el) => {
     if (!el) return;
+    el.style.fontSize = '';
     el.style.left = '';
     el.style.top = '';
-    el.style.marginLeft = '';
   });
-  const vh = getViewportSize().height;
-  const bottomPad = isMobileViewport() ? Math.max(vh * 0.12, 80) : 80;
-  document.documentElement.style.setProperty('--intro-name-padding-bottom', `${bottomPad}px`);
-  gsap.set(pContent, { x: 0, y: 0, scale: 1, clearProps: 'transform' });
 }
 
 function refreshIntroNameAnchor() {
@@ -185,7 +157,7 @@ function refreshIntroNameAnchor() {
   if (nameAnchorRaf) cancelAnimationFrame(nameAnchorRaf);
   nameAnchorRaf = requestAnimationFrame(() => {
     nameAnchorRaf = 0;
-    placeIntroNameAtBottom();
+    placeIntroNameAtHeroLine();
   });
 }
 
@@ -205,8 +177,7 @@ const master = gsap.timeline({ delay: 0.2 });
 master
   
   .add(() => {
-    layoutNames();
-    gsap.set(pContent, { x: -(getTotalWidth() / 2 - pLogo.offsetWidth / 2) });
+    gsap.set(pContent, { x: -(getTotalWidth() / 2 - (pLogo?.offsetWidth || 0) / 2) });
     gsap.set(pLuke, { x: 0 });
   })
   .to(allRevealEls, {
@@ -216,70 +187,17 @@ master
     stagger: { each: 0.025, from: 'center' },
   })
 
-  .add(() => layoutNames())
   .add(() => {
-    document.getElementById('hero-bar')?.style.setProperty('will-change', 'opacity, clip-path');
+    document.getElementById('hero-tagline')?.style.setProperty('will-change', 'opacity, clip-path');
     document.getElementById('hero-line')?.style.setProperty('will-change', 'transform');
-    
-    
   })
   .to({}, { duration: 0.3 })
 
   
   .add(() => {
-    const mobile = isMobileViewport();
-    const pad = mobile ? 20 : 48;
-    const currentW = getTotalWidth();
-    const viewportSize = getViewportSize();
-    const targetW = viewportSize.width - pad * 2;
-    const scale = (targetW / currentW) * 0.9;
-
-    const visualCenterX = getTotalWidth() / 2;
-    const visualCenterY = pContent.offsetHeight / 2;
-    gsap.set(pContent, { transformOrigin: `${visualCenterX}px ${visualCenterY}px` });
-
-    const vh = viewportSize.height;
-    const bottomPad = mobile ? Math.max(vh * 0.18, 110) : 80;
-    const targetBottom = vh - bottomPad;
-    const contentRect = pContent.getBoundingClientRect();
-    const curVisualCenterY = contentRect.top + visualCenterY;
-    const targetVisualCenterY = targetBottom - (pContent.offsetHeight * scale / 2);
-    const deltaY = targetVisualCenterY - curVisualCenterY;
-
-    const baseFontSize = parseFloat(getComputedStyle(pLogo).fontSize);
-    const newFontSize = baseFontSize * scale;
-
-    const applyFinalState = () => {
-      pContent.style.visibility = 'hidden';
-      gsap.set(pContent, { scale: 1, x: 0, y: 0 });
-
-      gsap.set(nameLayer, { mixBlendMode: 'difference', autoAlpha: 1 });
-      const vwSize = (newFontSize / viewportSize.width) * 100;
-      _introSettledXvw = vwSize * 0.5;
-      [pLogo, pLuke].forEach(el => {
-        el.style.fontSize = `${vwSize}vw`;
-      });
-      void pContent.offsetWidth;
-      placeIntroNameAtBottom();
-      ensureIntroNameVisible();
-      keepIntroNameAnchored = true;
-      pContent.style.visibility = 'visible';
-    };
-
-    if (shouldSkipLongIntro || prefersReducedMotion) {
-      applyFinalState();
-      return;
-    }
-
-    gsap.to(pContent, {
-      scale: scale,
-      y: `+=${deltaY}`,
-      duration: 0.75,
-      ease: 'power3.inOut',
-      onComplete: () => {
-        requestAnimationFrame(applyFinalState);
-      },
-    });
+    placeIntroNameAtHeroLine();
+    ensureIntroNameVisible();
+    keepIntroNameAnchored = true;
   })
   .to(tPanelDark, {
     y: '0%',
@@ -315,12 +233,6 @@ master
     duration: 1.1,
     ease: 'power3.inOut',
   }, '-=0.2')
-  .to('#hero-bar', {
-    opacity: 1,
-    clipPath: 'inset(0 0 0% 0)',
-    duration: 1.0,
-    ease: 'power3.inOut',
-  }, '-=0.8')
   .fromTo('#hero-line',
     { opacity: 1, scaleX: 0 },
     { scaleX: 1, duration: 1.0, ease: 'power3.inOut' },
@@ -386,7 +298,6 @@ master.add(() => {
   allRevealEls.forEach(ch => { ch.style.willChange = 'auto'; });
   gsap.set([pContent, tPanelRed, tPanelDark], { willChange: 'auto' });
   document.getElementById('hero-tagline')?.style.setProperty('will-change', 'auto');
-  document.getElementById('hero-bar')?.style.setProperty('will-change', 'auto');
   document.getElementById('hero-line')?.style.setProperty('will-change', 'auto');
   document.querySelectorAll('.ch-top').forEach(el => { el.style.willChange = 'auto'; });
 
@@ -426,7 +337,7 @@ async function setupScrollReveal() {
   }
 
   
-  [pContent, pLogo, pLuke, pBaffait, pDot].forEach(el => gsap.killTweensOf(el));
+  [pContent, pLogo, pLuke].forEach(el => gsap.killTweensOf(el));
 
   const revealWrap = document.getElementById('reveal-image-wrap');
   const revealSeq = document.querySelectorAll('.reveal-seq');
@@ -579,7 +490,6 @@ async function setupScrollReveal() {
 
   scrollTl.fromTo(pContent, { x: introXvw, y: introSettledY }, { x: introXvw, y: 0, duration: 0.3, ease: 'none' }, 0);
   scrollTl.fromTo('#hero-tagline', { opacity: 1 }, { opacity: 0, duration: 0.15, ease: 'none' }, 0);
-  scrollTl.fromTo('#hero-bar', { opacity: 1 }, { opacity: 0, duration: 0.15, ease: 'none' }, 0);
   scrollTl.fromTo('#hero-line', { opacity: 1 }, { opacity: 0, duration: 0.15, ease: 'none' }, 0);
 
   
@@ -605,8 +515,6 @@ async function setupScrollReveal() {
   const exitRight = mobile ? '35vw' : '55vw';
   scrollTl.fromTo(pLogo, { x: '0vw', opacity: 1 }, { x: exitLeft, opacity: 0, duration: 0.7, ease: 'none' }, 0.3);
   scrollTl.fromTo(pLuke, { x: '0vw', opacity: 1 }, { x: exitLeft, opacity: 0, duration: 0.7, ease: 'none' }, 0.3);
-  scrollTl.fromTo(pBaffait, { x: '0vw', opacity: 1 }, { x: exitRight, opacity: 0, duration: 0.7, ease: 'none' }, 0.3);
-  scrollTl.fromTo(pDot, { x: '0vw', opacity: 1 }, { x: exitRight, opacity: 0, duration: 0.7, ease: 'none' }, 0.3);
 
   scrollTl.set(nameLayer, { autoAlpha: 0 }, 0.98);
 
@@ -1331,12 +1239,12 @@ function setupProjectsSection() {
   })();
 
   
-  ; (function () {
+  ; (function initSkillGroups() {
     var groups = document.querySelectorAll('.skill-group');
+    if (!groups.length) return;
 
-    
     var firstBody = groups[0].querySelector('.skill-body');
-    firstBody.style.height = firstBody.scrollHeight + 'px';
+    if (firstBody) firstBody.style.height = firstBody.scrollHeight + 'px';
 
     groups.forEach(function (group) {
       group.querySelector('.skill-header').addEventListener('click', function () {
