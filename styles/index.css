@@ -573,6 +573,7 @@ a.chr-hover {
 
 .about-footer.about-footer--ready {
   visibility: visible;
+  pointer-events: auto;
 }
 
 .about-body {

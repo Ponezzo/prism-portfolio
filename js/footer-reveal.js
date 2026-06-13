@@ -175,6 +175,10 @@
     var transitionEl = document.querySelector(cfg.transition);
     if (!footerEl || !transitionEl) return;
 
+    var revealStart = cfg.landingFooter ? 'top top' : 'top bottom+=500';
+    var revealEnd = cfg.landingFooter ? 'bottom top' : 'bottom bottom';
+    var charStart = cfg.landingFooter ? 'top 65%' : 'center bottom+=500';
+
     loadAndRender('assets/images/footer/left.png', cfg.asciiLeftId, 80);
     loadAndRender('assets/images/footer/right.png', cfg.asciiRightId, 80);
 
@@ -186,8 +190,8 @@
         ease: 'none',
         scrollTrigger: {
           trigger: cfg.transition,
-          start: 'top bottom+=500',
-          end: 'bottom bottom',
+          start: revealStart,
+          end: revealEnd,
           scrub: true,
         },
       });
@@ -196,8 +200,8 @@
         ease: 'none',
         scrollTrigger: {
           trigger: cfg.transition,
-          start: 'top bottom+=500',
-          end: 'bottom bottom',
+          start: revealStart,
+          end: revealEnd,
           scrub: true,
         },
       });
@@ -230,6 +234,24 @@
       requestAnimationFrame(parallaxLoop);
     }
 
+    function showFooterBlock() {
+      footerEl.style.visibility = 'visible';
+      if (cfg.landingFooter) footerEl.classList.add('about-footer--ready');
+      blockVisible = true;
+      parallaxLoop();
+    }
+
+    function hideFooterBlock() {
+      blockVisible = false;
+      if (cfg.hideOnLeave === false) return;
+      footerEl.style.visibility = 'hidden';
+      if (cfg.landingFooter) footerEl.classList.remove('about-footer--ready');
+    }
+
+    if (cfg.landingFooter) {
+      showFooterBlock();
+    }
+
     footerEl.querySelectorAll('[data-chr-footer]').forEach(function (el) {
       var text = el.getAttribute('data-chr-footer');
       el.removeAttribute('data-chr-footer');
@@ -256,8 +278,8 @@
         stagger: { each: 0.015, from: 'start' },
         scrollTrigger: {
           trigger: cfg.transition,
-          start: 'center bottom+=500',
-          end: 'bottom bottom',
+          start: charStart,
+          end: revealEnd,
           scrub: true,
         },
       });
@@ -311,8 +333,8 @@
         stagger: { each: 0.04, from: 'start' },
         scrollTrigger: {
           trigger: cfg.transition,
-          start: 'center bottom+=500',
-          end: 'bottom bottom',
+          start: charStart,
+          end: revealEnd,
           scrub: true,
         },
       });
@@ -320,35 +342,17 @@
 
     ScrollTrigger.create({
       trigger: cfg.transition,
-      start: 'top bottom+=500',
-      end: 'bottom bottom',
-      onEnter: function () {
-        footerEl.style.visibility = 'visible';
-        if (cfg.landingFooter) footerEl.classList.add('about-footer--ready');
-        blockVisible = true;
-        parallaxLoop();
-      },
-      onLeave: function () {
-        blockVisible = false;
-        if (cfg.hideOnLeave !== false) {
-          footerEl.style.visibility = 'hidden';
-          if (cfg.landingFooter) footerEl.classList.remove('about-footer--ready');
-        }
-      },
-      onEnterBack: function () {
-        footerEl.style.visibility = 'visible';
-        if (cfg.landingFooter) footerEl.classList.add('about-footer--ready');
-        blockVisible = true;
-        parallaxLoop();
-      },
+      start: revealStart,
+      end: revealEnd,
+      onEnter: showFooterBlock,
+      onLeave: hideFooterBlock,
+      onEnterBack: showFooterBlock,
       onLeaveBack: function () {
-        blockVisible = false;
         if (cfg.landingFooter) {
-          footerEl.style.visibility = 'visible';
-          footerEl.classList.add('about-footer--ready');
+          showFooterBlock();
           return;
         }
-        footerEl.style.visibility = 'hidden';
+        hideFooterBlock();
       },
     });
   };

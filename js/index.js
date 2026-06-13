@@ -737,26 +737,27 @@ function setupProjectsSection() {
   if (!items.length || !card || !cover || !preview) return;
 
   let currentIdx = -1;
-  let _projectsVisible = false;
+  let _projectsInView = false;
   gsap.set(card, { opacity: 0 });
+  gsap.set(preview, { opacity: 0 });
 
   function showPreviewPanel() {
+    if (!_projectsInView) return;
     preview.classList.add('visible');
     gsap.to(preview, { opacity: 1, duration: 0.35, ease: 'power2.out', overwrite: 'auto' });
-    _projectsVisible = true;
   }
 
-  function fadePreviewForSkills() {
-    gsap.to(preview, { opacity: 0, duration: 0.15, ease: 'power2.in', overwrite: 'auto' });
-    gsap.to(card, { opacity: 0, duration: 0.15, ease: 'power2.in', overwrite: 'auto' });
+  function hidePreviewPanel() {
     preview.classList.remove('visible');
+    gsap.to(preview, { opacity: 0, duration: 0.18, ease: 'power2.in', overwrite: 'auto' });
+    gsap.to(card, { opacity: 0, duration: 0.18, ease: 'power2.in', overwrite: 'auto' });
   }
 
-  function restorePreviewFromSkills() {
-    if (currentIdx < 0 || !_projectsVisible) return;
+  function restorePreviewInProjects() {
+    if (!_projectsInView || currentIdx < 0) return;
     preview.classList.add('visible');
-    gsap.to(preview, { opacity: 1, duration: 0.2, ease: 'power2.out', overwrite: 'auto' });
-    gsap.to(card, { opacity: 1, duration: 0.2, ease: 'power2.out', overwrite: 'auto' });
+    gsap.to(preview, { opacity: 1, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
+    gsap.to(card, { opacity: 1, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
   }
 
   
@@ -775,18 +776,21 @@ function setupProjectsSection() {
     start: 'top 80%',
     end: 'bottom top',
     onEnter: () => {
-      if (currentIdx < 0) showPreviewPanel();
+      _projectsInView = true;
+      if (currentIdx >= 0) restorePreviewInProjects();
+    },
+    onLeave: () => {
+      _projectsInView = false;
+      hidePreviewPanel();
     },
     onEnterBack: () => {
-      if (currentIdx >= 0) showPreviewPanel();
+      _projectsInView = true;
+      if (currentIdx >= 0) restorePreviewInProjects();
     },
-  });
-
-  ScrollTrigger.create({
-    trigger: '#skills',
-    start: 'top bottom',
-    onEnter: fadePreviewForSkills,
-    onEnterBack: restorePreviewFromSkills,
+    onLeaveBack: () => {
+      _projectsInView = false;
+      hidePreviewPanel();
+    },
   });
 
   
@@ -813,7 +817,7 @@ function setupProjectsSection() {
   });
 
   function onProjectsScroll() {
-    if (!_projectsVisible) return;
+    if (!_projectsInView) return;
     const cy = window.innerHeight / 2;
     const halfH = window.innerHeight / 2;
     let closestIdx = -1, closestDist = Infinity;
@@ -878,12 +882,12 @@ function setupProjectsSection() {
   
   document.addEventListener('mousemove', (e) => {
     
-    if (_projectsVisible) {
+    if (_projectsInView) {
       qCursorX(e.clientX);
       qCursorY(e.clientY);
     }
     
-    if (_projectsVisible) {
+    if (_projectsInView) {
       const rect = card.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
@@ -908,7 +912,7 @@ function setupProjectsSection() {
 
   
   gsap.ticker.add(() => {
-    if (_projectsVisible) {
+    if (_projectsInView) {
       _tiltRY += (_tiltTargetRY - _tiltRY) * 0.12;
       _tiltRX += (_tiltTargetRX - _tiltRX) * 0.12;
       card.style.transform = 'rotateY(' + _tiltRY.toFixed(2) + 'deg) rotateX(' + _tiltRX.toFixed(2) + 'deg)';
