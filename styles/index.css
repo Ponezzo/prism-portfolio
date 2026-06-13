@@ -742,41 +742,12 @@ a.chr-hover {
   transform-style: preserve-3d;
 }
 
-.proj-card img,
-.proj-live {
+.proj-card img {
   width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
   cursor: none;
-}
-
-.proj-live {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: 2px;
-  background: #111;
-  display: none;
-}
-
-.proj-live.active {
-  display: block;
-}
-
-.proj-live iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  pointer-events: none;
-  transform: scale(1);
-  transform-origin: top left;
-}
-
-.proj-card img.hidden {
-  display: none;
 }
 
 .proj-meta {

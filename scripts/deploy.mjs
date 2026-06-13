@@ -9,8 +9,7 @@ function run(cmd) {
 }
 
 run('node scripts/bump-deploy-version.mjs');
-run('node scripts/build-projects.mjs');
 run('npm run apply:all');
 run('git add -A');
-run('git diff --cached --quiet || git commit -m "Deploy: project pages, live preview, margin reset"');
+run('git diff --cached --quiet || git commit -m "Revert external project pages; restore detail overlay and cover preview"');
 run('git push origin main');

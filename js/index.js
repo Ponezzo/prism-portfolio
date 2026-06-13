@@ -736,48 +736,9 @@ function setupProjectsSection() {
   const items = document.querySelectorAll('.proj-item');
   const card = document.getElementById('proj-card');
   const cover = document.getElementById('proj-cover');
-  const liveWrap = document.getElementById('proj-live');
-  const liveFrame = document.getElementById('proj-iframe');
   const dateEl = document.getElementById('proj-date');
   const preview = document.getElementById('proj-preview');
   if (!items.length || !card || !cover || !preview) return;
-
-  const LIVE_PROJECT_PAGES = {
-    flip: 'projects/flip/',
-    dingading: 'projects/dingading/main/',
-    cinemovie: 'projects/cinemovie/',
-  };
-
-  function getSiteBase() {
-    const pathname = window.location.pathname;
-    const marker = '/prism-portfolio';
-    const idx = pathname.indexOf(marker);
-    return idx >= 0 ? `${pathname.slice(0, idx + marker.length)}/` : '/';
-  }
-
-  function getProjectPageUrl(id) {
-    const rel = LIVE_PROJECT_PAGES[id];
-    return rel ? `${getSiteBase()}${rel}` : null;
-  }
-
-  function setPreviewMedia(id) {
-    const pageUrl = getProjectPageUrl(id);
-    if (pageUrl && liveWrap && liveFrame) {
-      cover.classList.add('hidden');
-      liveWrap.classList.add('active');
-      if (liveFrame.dataset.src !== pageUrl) {
-        liveFrame.src = pageUrl;
-        liveFrame.dataset.src = pageUrl;
-      }
-      return;
-    }
-    if (liveWrap && liveFrame) {
-      liveWrap.classList.remove('active');
-      liveFrame.removeAttribute('src');
-      liveFrame.dataset.src = '';
-    }
-    cover.classList.remove('hidden');
-  }
 
   let currentIdx = -1;
   let _projectsInView = false;
@@ -938,8 +899,7 @@ function setupProjectsSection() {
     showPreviewPanel();
 
     if (currentIdx === -1) {
-      setPreviewMedia(items[i].dataset.id);
-      if (!getProjectPageUrl(items[i].dataset.id)) cover.src = items[i].dataset.img;
+      cover.src = items[i].dataset.img;
       if (dateEl) dateEl.textContent = items[i].dataset.date;
       gsap.to(card, { opacity: 1, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
     } else {
@@ -949,8 +909,7 @@ function setupProjectsSection() {
         ease: 'power2.in',
         overwrite: 'auto',
         onComplete: () => {
-          setPreviewMedia(items[i].dataset.id);
-          if (!getProjectPageUrl(items[i].dataset.id)) cover.src = items[i].dataset.img;
+          cover.src = items[i].dataset.img;
           if (dateEl) dateEl.textContent = items[i].dataset.date;
           gsap.to(card, { opacity: 1, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
         },
@@ -1670,12 +1629,6 @@ function setupProjectsSection() {
   }
 
   function openProject(id, clickedItem) {
-    const pageUrl = getProjectPageUrl(id);
-    if (pageUrl) {
-      window.location.href = pageUrl;
-      return;
-    }
-
     const proj = PROJECTS[id];
     if (!proj || projectOpen) return;
     projectOpen = true; window._projectOpen = true;
