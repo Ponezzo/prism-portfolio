@@ -86,6 +86,20 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.deploy-version-badge {
+  position: fixed;
+  top: 14px;
+  left: 16px;
+  z-index: 50000;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.42);
+  pointer-events: none;
+  user-select: none;
+}
+
 
 .intro-bg {
   position: fixed;

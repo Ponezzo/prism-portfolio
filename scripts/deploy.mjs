@@ -8,6 +8,7 @@ function run(cmd) {
   execSync(cmd, { cwd: root, stdio: 'inherit', shell: true });
 }
 
+run('node scripts/bump-deploy-version.mjs');
 run('npm run apply:all');
 run('git add -A');
 run('git diff --cached --quiet || git commit -m "Deploy portfolio updates"');
