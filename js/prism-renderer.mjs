@@ -81,8 +81,8 @@ const PrismRenderer = {
     this._camera.position.set(0, 0.05, 5.8);
 
     this._letters = new THREE.Group();
-    this._letters.add(this._createChromaticLetter(font, 'T', -0.95));
-    this._letters.add(this._createChromaticLetter(font, 'G', 0.95));
+    this._letters.add(this._createChromaticLetter(font, 'T', -0.72));
+    this._letters.add(this._createChromaticLetter(font, 'G', 0.72));
     this._letters.scale.setScalar(0.78);
     this._scene.add(this._letters);
 
@@ -122,8 +122,8 @@ const PrismRenderer = {
 
   _hostSize(el) {
     const rect = el.getBoundingClientRect();
-    const w = Math.round(rect.width) || Math.min(window.innerWidth * 0.28, 320);
-    const h = Math.round(rect.height) || Math.min(window.innerHeight * 0.36, 420);
+    const w = Math.round(rect.width) || Math.min(window.innerWidth * 0.13, 160);
+    const h = Math.round(rect.height) || Math.min(window.innerHeight * 0.17, 210);
     return { w, h };
   },
 
@@ -148,9 +148,9 @@ const PrismRenderer = {
   _createChromaticLetter(font, char, xPos) {
     const group = new THREE.Group();
     const layers = [
-      { x: -0.022, tint: 0xff0088, transmission: 0.55, opacity: 0.55 },
+      { x: -0.012, tint: 0xff0088, transmission: 0.5, opacity: 0.45 },
       { x: 0, tint: 0xffffff, transmission: 0.94, opacity: 1 },
-      { x: 0.022, tint: 0x00eeff, transmission: 0.55, opacity: 0.55 },
+      { x: 0.012, tint: 0x00eeff, transmission: 0.5, opacity: 0.45 },
     ];
 
     layers.forEach(({ x, tint, transmission, opacity }) => {

@@ -530,8 +530,8 @@ a.chr-hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(200px, 26vw, 320px);
-  height: clamp(260px, 34vh, 420px);
+  width: clamp(100px, 13vw, 160px);
+  height: clamp(130px, 17vh, 210px);
   pointer-events: none;
 }
 
@@ -1745,8 +1745,8 @@ a.chr-hover {
   .prism-hero__wrap {
     right: 50%;
     transform: translate(50%, calc(-50% - 2vh));
-    width: min(62vw, 280px);
-    height: min(34vh, 340px);
+    width: min(31vw, 140px);
+    height: min(17vh, 170px);
   }
 
   .hero-bar .chr-hover .ch-top,
