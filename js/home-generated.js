@@ -48,16 +48,8 @@ window.__HOME__ = {
           ]
         },
         {
-          "id": "animation3d",
-          "title": "Animation & 3D",
-          "items": [
-            "GSAP",
-            "Three.js"
-          ]
-        },
-        {
-          "id": "devopstools",
-          "title": "DevOps & Tools",
+          "id": "tools",
+          "title": "Tools",
           "items": [
             "Git",
             "GitHub",
@@ -67,17 +59,13 @@ window.__HOME__ = {
           ]
         },
         {
-          "id": "productplanning",
-          "title": "Product & Planning",
+          "id": "productothers",
+          "title": "Product & Others",
           "items": [
-            "UX Planning",
-            "Product Strategy",
-            "Agile / Scrum",
-            "MVP Definition",
+            "UI/UX Design",
+            "MVP Based Planning",
             "User Interview",
-            "Figma Prototyping",
-            "SQLD",
-            "ADsP"
+            "AI (Claude, OPenAI, Gemini)"
           ]
         }
       ]

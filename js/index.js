@@ -1354,45 +1354,6 @@ function setupProjectsSection() {
 
     bindSkillGroups();
     window.addEventListener('home-skills-updated', bindSkillGroups);
-
-    (function setupSkillsLeftPin() {
-      var pinTrigger = null;
-
-      function refreshSkillsLeftPin() {
-        if (pinTrigger) {
-          pinTrigger.kill();
-          pinTrigger = null;
-        }
-        if (isMobileViewport()) return;
-
-        var left = document.querySelector('.skills-left');
-        var skills = document.getElementById('skills');
-        var right = document.getElementById('skills-right');
-        if (!left || !skills || !right) return;
-
-        pinTrigger = ScrollTrigger.create({
-          trigger: skills,
-          start: 'top top',
-          end: function () {
-            return '+=' + Math.max(right.offsetHeight - window.innerHeight * 0.35, 0);
-          },
-          pin: left,
-          pinSpacing: false,
-          invalidateOnRefresh: true,
-        });
-      }
-
-      refreshSkillsLeftPin();
-      window.addEventListener('home-skills-updated', function () {
-        requestAnimationFrame(function () {
-          refreshSkillsLeftPin();
-          ScrollTrigger.refresh();
-        });
-      });
-      window.addEventListener('resize', function () {
-        requestAnimationFrame(refreshSkillsLeftPin);
-      });
-    })();
   })();
 
   

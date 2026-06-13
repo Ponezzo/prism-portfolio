@@ -37,24 +37,17 @@ Skills
 		TypeScript
 		HTML / CSS
 		Three.js
-	Animation & 3D
-		GSAP
-		Three.js
-	DevOps & Tools
+	Tools
 		Git
 		GitHub
 		Figma
 		Notion
 		Jira
-	Product & Planning
-		UX Planning
-		Product Strategy
-		Agile / Scrum
-		MVP Definition
+	Product & Others
+		UI/UX Design
+		MVP Based Planning
 		User Interview
-		Figma Prototyping
-		SQLD
-		ADsP
+		AI (Claude, OPenAI, Gemini)
 
 Projects
 	FLIP
@@ -71,7 +64,5 @@ ProjectsPreview
 	See project
 
 Footer
-	taegeonpark97@gmail.com
-	© 2026
 	Taegeon
 	Park

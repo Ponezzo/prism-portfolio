@@ -157,14 +157,16 @@ function applySections(sections, home) {
   }
 
   if (sections.Footer) {
-    const [email, copyright, nameFirst, nameLast] = takeOneTabLines(sections.Footer);
-    content.footer = {
-      ...(content.footer ?? {}),
-      ...(email != null ? { email } : {}),
-      ...(copyright != null ? { copyright } : {}),
-      ...(nameFirst != null ? { nameFirst } : {}),
-      ...(nameLast != null ? { nameLast } : {}),
-    };
+    const lines = takeOneTabLines(sections.Footer);
+    const patch = { ...(content.footer ?? {}) };
+    if (lines.length >= 4) {
+      [patch.email, patch.copyright, patch.nameFirst, patch.nameLast] = lines;
+    } else if (lines.length === 2) {
+      [patch.nameFirst, patch.nameLast] = lines;
+    } else if (lines.length === 1) {
+      patch.nameFirst = lines[0];
+    }
+    content.footer = patch;
   }
 
   return home;
