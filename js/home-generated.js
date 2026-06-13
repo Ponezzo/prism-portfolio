@@ -48,7 +48,7 @@ window.__HOME__ = {
           ]
         },
         {
-          "id": "animation",
+          "id": "animation3d",
           "title": "Animation & 3D",
           "items": [
             "GSAP",
@@ -56,7 +56,7 @@ window.__HOME__ = {
           ]
         },
         {
-          "id": "devops",
+          "id": "devopstools",
           "title": "DevOps & Tools",
           "items": [
             "Git",
@@ -67,7 +67,7 @@ window.__HOME__ = {
           ]
         },
         {
-          "id": "product",
+          "id": "productplanning",
           "title": "Product & Planning",
           "items": [
             "UX Planning",

@@ -1,0 +1,77 @@
+# TGP Portfolio — 페이지 텍스트 (이 파일만 수정하세요)
+# npm run apply:text  →  content/home.json 반영  →  npm run apply:home
+#
+# 규칙
+#   (탭 없음)     섹션 이름
+#   \t 한 번      섹션 항목 (Skills: 1=부제, 2=본문, 그다음=카테고리명)
+#   \t\t 두 번    Skills 카테고리 아래 스킬 항목
+#
+# Skills 예시
+#   Skills
+#   	Skills
+#   	본문
+#   	Frontend
+#   		Vue 3
+#   		React
+
+Preloader
+	T
+	aegeon
+
+Hero
+	기본적으로 사용자를 우선으로 한 기획과 개발을 합니다.
+
+About
+	제목
+	본문
+
+Skills
+	Skills
+	본문
+	Frontend
+		Vue 3
+		React
+		React Native
+		Next.js
+		JavaScript
+		TypeScript
+		HTML / CSS
+		Three.js
+	Animation & 3D
+		GSAP
+		Three.js
+	DevOps & Tools
+		Git
+		GitHub
+		Figma
+		Notion
+		Jira
+	Product & Planning
+		UX Planning
+		Product Strategy
+		Agile / Scrum
+		MVP Definition
+		User Interview
+		Figma Prototyping
+		SQLD
+		ADsP
+
+Projects
+	FLIP
+		12 2025
+	Dingading
+		08 2025
+	WakWak
+		06 2025
+	CINEMovie
+		03 2024
+
+ProjectsPreview
+	Preview
+	See project
+
+Footer
+	taegeonpark97@gmail.com
+	© 2026
+	Taegeon
+	Park

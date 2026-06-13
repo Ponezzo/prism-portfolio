@@ -47,7 +47,7 @@
           ]
         },
         {
-          "id": "animation",
+          "id": "animation3d",
           "title": "Animation & 3D",
           "items": [
             "GSAP",
@@ -55,7 +55,7 @@
           ]
         },
         {
-          "id": "devops",
+          "id": "devopstools",
           "title": "DevOps & Tools",
           "items": [
             "Git",
@@ -66,7 +66,7 @@
           ]
         },
         {
-          "id": "product",
+          "id": "productplanning",
           "title": "Product & Planning",
           "items": [
             "UX Planning",

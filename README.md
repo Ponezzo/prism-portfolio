@@ -13,12 +13,17 @@ Taegeon Park personal portfolio — scroll-driven landing with motion-rich proje
 - Preloader → Hero → About → Projects → Skills → Footer
 - `/works/` project grid subpage
 
-## Local dev
+## Page text (editable)
+
+Edit **`content/page-text.txt`** — tab-indented sections (see file header), then:
 
 ```bash
-npm install
-npx serve . -p 4173
+npm run apply:text   # merge into content/home.json
+npm run apply:home   # regenerate js/home-generated.js
 ```
+
+Or `npm run apply:all` / `npm run deploy` to run everything.
+
 
 ## Deploy to GitHub Pages
 
