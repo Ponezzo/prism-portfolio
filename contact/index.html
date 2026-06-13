@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact</title>
+  <link rel="stylesheet" href="../styles/base.css">
+</head>
+<body>
+  <div class="page-title" id="page-title">Contact</div>
+  <a class="back-btn" href="../">Back</a>
+  <nav class="nav-dock" id="nav-dock"></nav>
+  <main class="section">
+    <h1 class="section__title" id="headline"></h1>
+    <p id="note" style="color:var(--color-text-muted);max-width:52ch"></p>
+    <p style="margin:24px 0"><a id="email" style="color:var(--color-accent-hot)"></a></p>
+    <form class="contact-form" id="contact-form">
+      <label class="field"><span>Name</span><input required></label>
+      <label class="field"><span>Email</span><input type="email" required></label>
+      <label class="field"><span>Message</span><textarea required></textarea></label>
+      <button class="btn btn--primary" type="submit">Send</button>
+    </form>
+  </main>
+  <footer class="footer" id="footer"></footer>
+  <script type="module" src="contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+/* AUTO-GENERATED from design/tokens.json — do not edit by hand */
+:root {
+  --color-bg: #050508;
+  --color-bg-elevated: #0c0c12;
+  --color-surface: rgba(255,255,255,0.04);
+  --color-surface-strong: rgba(255,255,255,0.08);
+  --color-text: #f2f2f7;
+  --color-text-muted: #8e8e93;
+  --color-border: rgba(255,255,255,0.12);
+  --color-accent: #a78bfa;
+  --color-accent-hot: #22d3ee;
+  --color-accent-pink: #ff6ec7;
+  --gradient-prism: conic-gradient(from 210deg at 50% 50%, #ff6ec7 0deg, #7873f5 72deg, #22d3ee 144deg, #4ade80 216deg, #fbbf24 288deg, #ff6ec7 360deg);
+  --gradient-prism-linear: linear-gradient(135deg, #ff6ec7 0%, #7873f5 25%, #22d3ee 50%, #4ade80 75%, #fbbf24 100%);
+  --gradient-prism-soft: linear-gradient(135deg, rgba(255,110,199,0.35), rgba(120,115,245,0.35), rgba(34,211,238,0.35));
+  --gradient-glass-border: linear-gradient(135deg, rgba(255,255,255,0.45), rgba(255,255,255,0.05));
+  --radius-pill: 999px;
+  --radius-card: 40px;
+  --radius-panel: 24px;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --effect-glass-blur: 24px;
+  --effect-glow: 0 0 80px rgba(167,139,250,0.25);
+}

@@ -1,0 +1,159 @@
+[
+  {
+    "id": "flip",
+    "title": "FLIP",
+    "desc": "Smart factory AMR control dashboard with real-time 3D digital twin and performance-focused UX planning.",
+    "category": "Website",
+    "year": "2025",
+    "tags": ["Next.js", "Three.js", "PM"],
+    "cover": "assets/covers/flip.svg",
+    "detail": {
+      "summary": "SSAFY final project combining smart factory operations with a 3D digital twin interface. Led PM role from problem definition to MVP delivery.",
+      "highlights": [
+        "Real-time AMR monitoring and control dashboard",
+        "Three.js-based factory floor visualization",
+        "Performance metrics and UX planning for operators"
+      ],
+      "links": [{ "label": "GitHub", "url": "https://github.com/Ponezzo/FLIP" }]
+    }
+  },
+  {
+    "id": "dingading",
+    "title": "Dingading",
+    "desc": "AI voice-based band matching platform with quantitative tier evaluation and MVP-focused planning.",
+    "category": "Web Application",
+    "year": "2025",
+    "tags": ["Next.js", "AI", "Planning"],
+    "cover": "assets/covers/dingading.svg",
+    "detail": {
+      "summary": "Band matching service using AI voice analysis. Defined tier evaluation logic and MVP scope as product lead.",
+      "highlights": [
+        "Voice-based musician tier scoring",
+        "Matching flow and onboarding UX",
+        "MVP roadmap and stakeholder alignment"
+      ],
+      "links": [{ "label": "GitHub", "url": "https://github.com/Ponezzo/Dingading" }]
+    }
+  },
+  {
+    "id": "wakwak",
+    "title": "WakWak",
+    "desc": "Emotional diary app with time capsules, anonymous letters, and constellation-based journaling.",
+    "category": "Mobile App",
+    "year": "2025",
+    "tags": ["React Native", "PM"],
+    "cover": "assets/covers/wakwak.svg",
+    "detail": {
+      "summary": "Emotional wellness diary with time capsules and anonymous letter exchange. Focused on retention-oriented feature design.",
+      "highlights": [
+        "Constellation-based journal visualization",
+        "Time capsule and anonymous letter features",
+        "Mobile-first emotional UX planning"
+      ],
+      "links": [{ "label": "GitHub", "url": "https://github.com/Ponezzo/WakWak" }]
+    }
+  },
+  {
+    "id": "cinemovie",
+    "title": "CINEMovie",
+    "desc": "TMDB-powered movie community with AI chat recommendations and 3D carousel browsing.",
+    "category": "Website",
+    "year": "2024",
+    "tags": ["Vue 3", "Gemini", "FE"],
+    "cover": "assets/covers/cinemovie.svg",
+    "detail": {
+      "summary": "Movie discovery community with AI chat recommendations and immersive 3D carousel browsing experience.",
+      "highlights": [
+        "TMDB API integration for rich metadata",
+        "Gemini-powered recommendation chat",
+        "3D carousel movie browsing UI"
+      ],
+      "links": [{ "label": "GitHub", "url": "https://github.com/Ponezzo/CINEMovie" }]
+    }
+  },
+  {
+    "id": "cyberdiag",
+    "title": "CyberDiag Website",
+    "desc": "Showcase website for the CyberDiag app, presenting its features and benefits, and offering download for easy access.",
+    "category": "Website",
+    "year": "2026",
+    "tags": ["GSAP", "Lenis", "Three.js"],
+    "cover": "assets/covers/cyberdiag.svg",
+    "detail": {
+      "summary": "Marketing site for CyberDiag with scroll-driven motion, smooth scrolling, and 3D accents.",
+      "highlights": [
+        "GSAP scroll-triggered animations",
+        "Lenis smooth scroll integration",
+        "Three.js hero visual elements"
+      ]
+    }
+  },
+  {
+    "id": "anima",
+    "title": "Anima",
+    "desc": "Website about animal rights, created to practice web animations with tools like GSAP and Lenis.",
+    "category": "Website",
+    "year": "2026",
+    "tags": ["GSAP", "Lenis"],
+    "cover": "assets/covers/anima.svg",
+    "detail": {
+      "summary": "Editorial site exploring animal rights through motion design experiments with GSAP and Lenis.",
+      "highlights": [
+        "Scroll-linked storytelling sections",
+        "Typography and motion choreography",
+        "Performance-conscious animation setup"
+      ]
+    }
+  },
+  {
+    "id": "zenith",
+    "title": "Zenith",
+    "desc": "Privacy-focused web browser concept with ad blocking, tab management, and customization.",
+    "category": "Desktop App",
+    "year": "2026",
+    "tags": ["Electron", "JavaScript"],
+    "cover": "assets/covers/zenith.svg",
+    "detail": {
+      "summary": "Privacy-first browser concept with ad blocking, tab management, and deep customization.",
+      "highlights": [
+        "Electron-based desktop shell",
+        "Privacy and ad-blocking features",
+        "Customizable tab and theme system"
+      ]
+    }
+  },
+  {
+    "id": "symphony",
+    "title": "Symphony",
+    "desc": "Music streaming and discovery platform for hosting and sharing original tracks.",
+    "category": "Web Application",
+    "year": "2024",
+    "tags": ["JavaScript", "Netlify"],
+    "cover": "assets/covers/symphony.svg",
+    "detail": {
+      "summary": "Music discovery platform for hosting and sharing original tracks with a clean listening experience.",
+      "highlights": [
+        "Track upload and playback flow",
+        "Discovery-oriented browsing UI",
+        "Deployed on Netlify"
+      ]
+    }
+  },
+  {
+    "id": "echo",
+    "title": "Echo",
+    "desc": "Local AI chat interface for a smooth and private conversational experience.",
+    "category": "AI / Web",
+    "year": "2024",
+    "tags": ["JavaScript", "AI Local"],
+    "cover": "assets/covers/echo.svg",
+    "detail": {
+      "summary": "Local AI chat interface prioritizing privacy and a smooth conversational UX.",
+      "highlights": [
+        "Client-side focused chat UI",
+        "Local model integration pattern",
+        "Minimal, distraction-free interface"
+      ]
+    }
+  }
+]

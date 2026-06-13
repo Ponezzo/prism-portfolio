@@ -1,0 +1,24 @@
+---
+description: Prism Portfolio Figma ↔ GitHub sync workflow
+globs: prism-portfolio/**
+alwaysApply: false
+---
+
+# Prism Portfolio — Figma Sync
+
+When the user asks to apply Figma changes to GitHub for `prism-portfolio`:
+
+1. Read Figma file `izxX8YJ16HiW3JB4sQsClp` (Prism Theme variables + page frames)
+2. Map Figma Variables (`Prism Theme` collection) → `design/tokens.json` color keys:
+   - `color/bg` → `color.bg`
+   - `color/bg-elevated` → `color.bgElevated`
+   - `color/text` → `color.text`
+   - `color/text-muted` → `color.textMuted`
+   - `color/accent` → `color.accent`
+   - `color/accent-hot` → `color.accentHot`
+   - `color/accent-pink` → `color.accentPink`
+3. Update `content/site.json` and `content/projects.json` if page text frames changed
+4. Run `npm run apply:tokens` in `prism-portfolio/`
+5. Commit/push only when the user explicitly asks
+
+User phrase examples: "Figma 토큰 변경 GitHub에 적용해줘", "Figma에서 바꾼 디자인 prism-portfolio에 적용해줘"

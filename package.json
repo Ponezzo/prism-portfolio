@@ -1,0 +1,10 @@
+{
+  "name": "prism-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "apply:tokens": "node scripts/apply-tokens.mjs",
+    "dev": "npx serve . -p 4173",
+    "build": "npm run apply:tokens"
+  }
+}

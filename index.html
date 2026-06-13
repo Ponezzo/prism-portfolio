@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <meta name="description" content="Prism-styled creative developer portfolio">
+  <link rel="stylesheet" href="styles/base.css">
+</head>
+<body>
+  <div class="page-title" id="page-title">Portfolio</div>
+  <nav class="nav-dock" id="nav-dock"></nav>
+
+  <main class="hero">
+    <div class="hero__prism" aria-hidden="true"></div>
+    <section class="hero__glass">
+      <p style="letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-muted);font-size:.8rem" id="owner-name"></p>
+      <h1 class="hero__title" id="hero-title"></h1>
+      <p class="hero__subtitle" id="hero-subtitle"></p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" id="cta-work" href="works/"></a>
+        <a class="btn" id="cta-contact" href="contact/"></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+  <script type="module" src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "owner": {
+    "name": "Taegeon Park",
+    "role": "Product Manager · Creative Developer",
+    "email": "taegeonpark97@gmail.com",
+    "github": "https://github.com/Ponezzo",
+    "location": "Seoul, Korea"
+  },
+  "nav": [
+    { "id": "work", "label": "Work", "href": "works/" },
+    { "id": "info", "label": "Info", "href": "info/" },
+    { "id": "contact", "label": "Contact", "href": "contact/" }
+  ],
+  "home": {
+    "heroTitle": "Creative Developer",
+    "heroSubtitle": "Building interfaces with motion, clarity, and prism-light aesthetics.",
+    "ctaWork": "View Work",
+    "ctaContact": "Contact"
+  },
+  "info": {
+    "title": "Info",
+    "bio": "I design and ship product experiences where data, motion, and visual craft meet. SSAFY-trained PM with hands-on front-end experience across smart factory, AI, and community products.",
+    "skills": ["Product Strategy", "UX Planning", "JavaScript", "Vue / Next.js", "GSAP", "Three.js"]
+  },
+  "contact": {
+    "title": "Contact",
+    "headline": "Let's build something memorable.",
+    "note": "Available for PM and creative developer collaborations."
+  },
+  "footer": {
+    "copyright": "© 2026 Taegeon Park",
+    "credit": "Layout inspired by lukebaffait.fr · Prism style inspired by aerukart.com"
+  }
+}
