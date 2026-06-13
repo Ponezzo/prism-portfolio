@@ -121,12 +121,25 @@ ensureIntroNameVisible();
 gsap.set(nameLayer, { autoAlpha: 0, display: 'none' });
 gsap.set([pContent, tPanelRed, tPanelDark], { willChange: 'transform' });
 
-function showAboutFooterLanding() {
-  const aboutFooter = document.getElementById('about-footer');
-  if (aboutFooter) {
-    aboutFooter.style.visibility = 'visible';
-    aboutFooter.classList.add('about-footer--ready');
+function showSiteHeaderLanding() {
+  const siteHeader = document.getElementById('site-header');
+  if (siteHeader) {
+    siteHeader.style.visibility = 'visible';
+    siteHeader.classList.add('site-header--ready');
   }
+}
+
+function setupSiteHeader() {
+  if (!window.setupFooterRevealBlock) return;
+  window.setupFooterRevealBlock({
+    transition: '#site-header-transition',
+    footer: '#site-header',
+    asciiLeftId: 'header-ascii-left',
+    asciiRightId: 'header-ascii-right',
+    enableParallax: true,
+    landingFooter: true,
+    readyClass: 'site-header--ready',
+  });
 }
 
 let keepIntroNameAnchored = false;
@@ -229,7 +242,7 @@ master
     duration: 0.55,
     ease: 'power3.inOut',
   }, '-=0.4')
-  .add(showAboutFooterLanding);
+  .add(showSiteHeaderLanding);
 
 document.querySelectorAll('.chr-hover[data-chr]').forEach(el => {
   const text = el.dataset.chr;
@@ -299,7 +312,8 @@ master.add(() => {
   requestAnimationFrame(() => {
     if (revealSetupStarted) return;
     revealSetupStarted = true;
-    showAboutFooterLanding();
+    showSiteHeaderLanding();
+    setupSiteHeader();
     setupScrollReveal().catch(err => {
       console.error('setupScrollReveal failed:', err);
     });
@@ -307,7 +321,8 @@ master.add(() => {
 });
 
 if (mustSkip) {
-  showAboutFooterLanding();
+  showSiteHeaderLanding();
+  setupSiteHeader();
   master.progress(1);
   master.pause();
   if (!shouldSkipLongIntro) {
@@ -476,7 +491,7 @@ async function setupScrollReveal() {
 
   const introSettledY = Number(gsap.getProperty(pContent, 'y')) || 0;
   const introXvw = `${_introSettledXvw}vw`;
-  const useFooterLanding = !!document.getElementById('about-footer');
+  const useFooterLanding = !!document.getElementById('site-header');
 
   const REVEAL_PHASE_START = 0.3;
   const REVEAL_PHASE_DURATION = 0.7;
@@ -608,17 +623,6 @@ async function setupScrollReveal() {
 }
 
 function setupAboutSection() {
-  if (window.setupFooterRevealBlock) {
-    window.setupFooterRevealBlock({
-      transition: '#about-footer-transition',
-      footer: '#about-footer',
-      asciiLeftId: 'about-ascii-left',
-      asciiRightId: 'about-ascii-right',
-      enableParallax: true,
-      landingFooter: true,
-    });
-  }
-
   const aboutText = document.getElementById('about-text');
   const photoWrap = document.getElementById('about-photo-wrap');
 
@@ -698,7 +702,7 @@ function setupAboutSection() {
       filter: 'blur(0px)',
       ease: 'power2.out',
       scrollTrigger: {
-        trigger: '#about-footer-transition',
+        trigger: '#site-header-transition',
         start: 'bottom 75%',
         end: 'bottom 40%',
         scrub: 0.55,
@@ -738,8 +742,27 @@ function setupProjectsSection() {
 
   let currentIdx = -1;
   let _projectsInView = false;
+  let _lineReady = false;
+  const LINE_FIRST_PROJECT_PROGRESS = 0.17;
   gsap.set(card, { opacity: 0 });
   gsap.set(preview, { opacity: 0 });
+
+  function clearActiveProject() {
+    if (currentIdx >= 0) items[currentIdx].classList.remove('active');
+    currentIdx = -1;
+    hidePreviewPanel();
+  }
+
+  function updateLineReady(progress) {
+    const ready = progress >= LINE_FIRST_PROJECT_PROGRESS;
+    if (ready === _lineReady) return;
+    _lineReady = ready;
+    if (!_lineReady) {
+      clearActiveProject();
+      return;
+    }
+    if (_projectsInView) onProjectsScroll();
+  }
 
   function showPreviewPanel() {
     if (!_projectsInView) return;
@@ -754,7 +777,7 @@ function setupProjectsSection() {
   }
 
   function restorePreviewInProjects() {
-    if (!_projectsInView || currentIdx < 0) return;
+    if (!_projectsInView || currentIdx < 0 || !_lineReady) return;
     preview.classList.add('visible');
     gsap.to(preview, { opacity: 1, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
     gsap.to(card, { opacity: 1, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
@@ -801,6 +824,7 @@ function setupProjectsSection() {
   
   items.forEach((item, i) => {
     item.addEventListener('click', () => {
+      if (!_lineReady) return;
       if (item.classList.contains('active')) {
         openProject(item.dataset.id, item);
       } else {
@@ -817,7 +841,7 @@ function setupProjectsSection() {
   });
 
   function onProjectsScroll() {
-    if (!_projectsInView) return;
+    if (!_projectsInView || !_lineReady) return;
     const cy = window.innerHeight / 2;
     const halfH = window.innerHeight / 2;
     let closestIdx = -1, closestDist = Infinity;
@@ -836,6 +860,7 @@ function setupProjectsSection() {
   onProjectsScroll();
 
   function activateProject(i) {
+    if (!_lineReady) return;
     if (i === currentIdx) return;
     if (currentIdx >= 0) items[currentIdx].classList.remove('active');
     items[i].classList.add('active');
@@ -939,12 +964,11 @@ function setupProjectsSection() {
 
   
   const linePath = document.getElementById('fluid-line');
+  if (!linePath) return;
   const lineLen = linePath.getTotalLength();
 
-  
   gsap.set(linePath, { strokeDasharray: lineLen, strokeDashoffset: lineLen });
 
-  
   gsap.to(linePath, {
     strokeDashoffset: 0,
     ease: 'none',
@@ -953,6 +977,7 @@ function setupProjectsSection() {
       start: 'top 70%',
       end: 'bottom top',
       scrub: 1,
+      onUpdate: (self) => updateLineReady(self.progress),
     },
   });
 

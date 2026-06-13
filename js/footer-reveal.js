@@ -236,7 +236,8 @@
 
     function showFooterBlock() {
       footerEl.style.visibility = 'visible';
-      if (cfg.landingFooter) footerEl.classList.add('about-footer--ready');
+      var readyClass = cfg.readyClass || 'site-header--ready';
+      footerEl.classList.add(readyClass);
       blockVisible = true;
       parallaxLoop();
     }
@@ -245,7 +246,8 @@
       blockVisible = false;
       if (cfg.hideOnLeave === false) return;
       footerEl.style.visibility = 'hidden';
-      if (cfg.landingFooter) footerEl.classList.remove('about-footer--ready');
+      var readyClass = cfg.readyClass || 'site-header--ready';
+      footerEl.classList.remove(readyClass);
     }
 
     if (cfg.landingFooter) {
