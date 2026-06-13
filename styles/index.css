@@ -586,8 +586,8 @@ a.chr-hover {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  --edge-inset-x: 5%;
-  --edge-inset-y: 5%;
+  --edge-inset-x: 15%;
+  --edge-inset-y: 15%;
   padding: 0 var(--edge-inset-x) var(--edge-inset-y) 0;
   box-sizing: border-box;
 }
@@ -1576,8 +1576,8 @@ a.chr-hover {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  --edge-inset-x: 5%;
-  --edge-inset-y: 5%;
+  --edge-inset-x: 15%;
+  --edge-inset-y: 15%;
   padding: 0 var(--edge-inset-x) var(--edge-inset-y) 0;
   box-sizing: border-box;
 }
@@ -1586,8 +1586,8 @@ a.chr-hover {
   position: absolute;
   top: 0;
   left: 0;
-  right: var(--edge-inset-x, 5%);
-  bottom: var(--edge-inset-y, 5%);
+  right: var(--edge-inset-x, 15%);
+  bottom: var(--edge-inset-y, 15%);
   display: flex;
   justify-content: space-between;
   pointer-events: none;
@@ -1628,7 +1628,7 @@ a.chr-hover {
   position: absolute;
   top: 0;
   left: 0;
-  right: var(--edge-inset-x, 5%);
+  right: var(--edge-inset-x, 15%);
   z-index: 2;
   display: flex;
   justify-content: space-between;
@@ -1667,9 +1667,9 @@ a.chr-hover {
 
 .footer-name {
   position: absolute;
-  bottom: var(--edge-inset-y, 5%);
+  bottom: var(--edge-inset-y, 15%);
   left: 0;
-  right: var(--edge-inset-x, 5%);
+  right: var(--edge-inset-x, 15%);
   z-index: 1;
   display: flex;
   align-items: baseline;
