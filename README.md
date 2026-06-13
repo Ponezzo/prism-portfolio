@@ -27,7 +27,7 @@ npm run apply:tokens
 2. 채팅: "Figma에서 바꾼 디자인 prism-portfolio에 적용해줘"
 3. 에이전트가 Figma MCP로 변수/텍스트 읽기 → `design/tokens.json`, `content/*.json` 업데이트 → CSS 재생성
 
-Figma 파일: `design/tokens.json`의 `meta.figmaFileKey` 참고
+Figma 파일: https://www.figma.com/design/izxX8YJ16HiW3JB4sQsClp (`design/tokens.json`의 `meta.figmaFileKey`)
 
 ## 로컬 실행
 
@@ -40,7 +40,9 @@ npm run dev
 
 ## GitHub Pages
 
-Settings → Pages → Source: `main` / root
+배포 URL: https://ponezzo.github.io/prism-portfolio/
+
+Settings → Pages → Source: GitHub Actions (`pages.yml`)
 
 ## 페이지
 
