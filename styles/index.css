@@ -586,6 +586,10 @@ a.chr-hover {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  --edge-inset-x: 5%;
+  --edge-inset-y: 5%;
+  padding: 0 var(--edge-inset-x) var(--edge-inset-y) 0;
+  box-sizing: border-box;
 }
 
 .about-body {
@@ -1572,11 +1576,18 @@ a.chr-hover {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  --edge-inset-x: 5%;
+  --edge-inset-y: 5%;
+  padding: 0 var(--edge-inset-x) var(--edge-inset-y) 0;
+  box-sizing: border-box;
 }
 
 .footer-ascii-wrap {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: var(--edge-inset-x, 5%);
+  bottom: var(--edge-inset-y, 5%);
   display: flex;
   justify-content: space-between;
   pointer-events: none;
@@ -1617,11 +1628,11 @@ a.chr-hover {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  right: var(--edge-inset-x, 5%);
   z-index: 2;
   display: flex;
   justify-content: space-between;
-  padding: 2.5rem 3rem;
+  padding: 2.5rem 0 0 3rem;
 }
 
 .footer-top-col {
@@ -1656,14 +1667,15 @@ a.chr-hover {
 
 .footer-name {
   position: absolute;
-  bottom: 0;
+  bottom: var(--edge-inset-y, 5%);
   left: 0;
+  right: var(--edge-inset-x, 5%);
   z-index: 1;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  width: 100%;
-  padding: 0 1.5vw;
+  width: auto;
+  padding: 0;
   white-space: nowrap;
 }
 
