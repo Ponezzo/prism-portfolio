@@ -1,47 +1,52 @@
 # TGP Portfolio — 페이지 텍스트 (이 파일만 수정하세요)
 # npm run apply:text  →  content/home.json 반영  →  npm run apply:home
 #
-# About 규칙
-#   1줄: 제목
-#   major:전공 텍스트 (\n 줄바꿈 가능)
-#   cert:자격증명
-#   edu:학교명|기간/부가설명|이미지파일명
-#   award:연도|제목|기관|이미지파일명
+# 규칙
+#   (탭 없음)     섹션 이름
+#   \t 한 번      섹션 항목
+#   \t\t 두 번    Skills 카테고리 아래 스킬 항목
+#
+# 줄바꿈 (About 제목 / Skills 본문 등)
+#   1) 탭 줄을 나눠 작성        → 줄마다 줄바꿈
+#   2) 줄 끝 \                  → 다음 탭 줄과 이어짐 (표시용, 저장 시 제거)
+#   3) 줄 시작 \                → About 제목 연속 줄 / Skills 본문 줄바꿈 표시
+#   4) 같은 줄 안 \n            → 한 줄 안에서 줄바꿈
+#
+# About: 첫 줄 + \ 로 시작하는 줄 = 제목, 그 다음 줄부터 = 불릿
 
 About
-	기능의 수가 아니라, 사용자가 체감하는 가치로 제품을 판단합니다.
-	major:경영학과 및\n벤처중소기업학과 전공
-	cert:ADsP
-	cert:SQLD
-	edu:삼성 (2024.07 ~ 2025.06)|청년 AI/소프트웨어 아카데미|ssafy.png
-	edu:숭실대학교 (서울)|(2019.03 ~ 2024.02)|soongsil.png
-	edu:Saint Louis University (미국)|(2016.05 ~ 2018.05)|saint-louis.png
-	award:2025|SSAFY 기업연계 프로젝트 (우수상)|삼성전자주식회사|samsung.png
-	award:2024|Eduflex 인사담당|Eduflex|eduflex.png
-	award:2022|챔프스터디(해커스) 기획 인턴|챔프스터디|champstudy.png
+	기능의 수가 아니라,
+	\사용자가 체감하는 가치로 판단합니다.
+
+	삼성생산기술연구소 · 스마트팩토리 대시보드 프로젝트 (2위 - 2025.05)
+	SSAFY AI · SW 아카데미 (2024.07 – 2025.06)
+	숭실대학교 (2019 – 2024)
+	해커스교육그룹 기획 인턴 (2022)
+	Saint Louis University (2016 - 2018)
+	SQLD · ADsP
 
 Skills
 	Skills
-	사용자 경험과 데이터를 기준으로 제품을 기획하고, Vue·React·Three.js로 프로토타입까지 직접 검증합니다.
-	Frontend
-		Vue 3
+	사용자 경험과 데이터를 기준으로 기획하고,
+	주인의식을 가지고 직접 검증합니다.
+	Develop
+		Python
 		React
 		React Native
 		Next.js
 		JavaScript
 		TypeScript
-		HTML / CSS
 		Three.js
+		Android Studio
 	Tools
-		Git
-		GitHub
+		Git / GitHub
+		Slack
 		Figma
 		Notion
 		Jira
 	Product & Others
 		UI/UX Design
 		MVP Based Planning
-		User Interview
 		AI (Claude, OPenAI, Gemini)
 
 Projects

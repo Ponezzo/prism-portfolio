@@ -186,9 +186,7 @@ master.add(() => {
     revealSetupStarted = true;
     showSiteHeaderLanding();
     setupSiteHeader();
-    setupScrollReveal().catch(err => {
-      console.error('setupScrollReveal failed:', err);
-    });
+    setupAboutSection();
   });
 });
 
@@ -205,217 +203,6 @@ if (mustSkip) {
       ScrollTrigger.refresh();
     });
   }
-}
-
-async function setupScrollReveal() {
-  const revealWrap = document.getElementById('reveal-image-wrap');
-  const revealSeq = document.querySelectorAll('.reveal-seq');
-  const canvas = document.getElementById('reveal-canvas');
-  const textOnlyReveal = revealWrap && revealWrap.classList.contains('reveal-image-wrap--text-only');
-  const ctx = canvas ? canvas.getContext('2d') : null;
-
-  const phraseEl = document.getElementById('reveal-phrase');
-  let phraseChars = [];
-  if (phraseEl) {
-    phraseEl.innerHTML = [...phraseEl.textContent].map(ch =>
-      `<span class="rp-char" style="display:inline-block;">${ch === ' ' ? ' ' : ch}</span>`
-    ).join('');
-    phraseChars = phraseEl.querySelectorAll('.rp-char');
-    gsap.set(phraseChars, isMobile ? { opacity: 0 } : { opacity: 0, filter: 'blur(10px)' });
-  }
-
-  
-  const FRAME_DIR = 'assets/images/hero%20sequence/';
-  const FRAME_EXT = '.jpg';
-  const FRAME_PAD = 4;
-  const TOTAL_FRAMES = 341;
-  const FRAME_CACHE_KEY = '20260416-r2'; 
-  const frameUrl = n => `${FRAME_DIR}${String(n).padStart(FRAME_PAD, '0')}${FRAME_EXT}?v=${FRAME_CACHE_KEY}`;
-
-  const frames = new Array(TOTAL_FRAMES);
-  let loadedFrameIdx = [];
-  let totalFrames = 0;
-  let drawnIdx = -1;
-
-  function rebuildLoadedFrameIndex() {
-    loadedFrameIdx = [];
-    for (let i = 0; i < frames.length; i++) {
-      if (frames[i] && frames[i].naturalWidth) loadedFrameIdx.push(i);
-    }
-    totalFrames = loadedFrameIdx.length;
-  }
-
-  
-  if (canvas) canvas.style.willChange = 'transform';
-
-  function resizeCanvas() {
-    if (!canvas || !ctx) return;
-    
-    const dpr = isSlowHardware ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
-    canvas.width = Math.round(window.innerWidth * dpr);
-    canvas.height = Math.round(window.innerHeight * dpr);
-    if (drawnIdx >= 0) { const i = drawnIdx; drawnIdx = -1; drawFrame(i); }
-  }
-  let _lastDrawMs = 0;
-  function drawFrame(i) {
-    if (i === drawnIdx) return;
-    if (isSlowHardware) {
-      const now = performance.now();
-      if (now - _lastDrawMs < 32) return;
-      _lastDrawMs = now;
-    }
-    const progress = i / Math.max(TOTAL_FRAMES - 1, 1);
-    resizeCanvas();
-    if (window.RevealSequence) {
-      RevealSequence.draw(ctx, canvas.width, canvas.height, progress);
-      drawnIdx = i;
-      return;
-    }
-    if (i < 0 || i >= frames.length) return;
-    const img = frames[i];
-    if (!(img && img.naturalWidth)) return;
-    const cw = canvas.width, ch = canvas.height;
-    const iw = img.naturalWidth, ih = img.naturalHeight;
-    const s = Math.max(cw / iw, ch / ih);
-    const dw = iw * s, dh = ih * s;
-    ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(img, (cw - dw) * 0.5, (ch - dh) * 0.5, dw, dh);
-    drawnIdx = i;
-  }
-  function probe(n) {
-    return new Promise(resolve => {
-      const img = new Image();
-      img.decoding = 'async';
-      img.onload = () => resolve(img);
-      img.onerror = () => resolve(null);
-      img.src = frameUrl(n);
-    });
-  }
-  async function probeWithRetry(n, attempts = 3) {
-    for (let k = 0; k < attempts; k++) {
-      const img = await probe(n);
-      if (img) return img;
-    }
-    return null;
-  }
-  async function loadFirstBatch() {
-    const first = await probeWithRetry(1, 3);
-    if (!first) { console.error('Frame 1 failed to load!'); return 0; }
-    frames[0] = first;
-    rebuildLoadedFrameIndex();
-    resizeCanvas();
-    drawFrame(0);
-
-    const SPEED_BATCH = 10;
-    const t0 = performance.now();
-    const batchNums = Array.from({ length: Math.min(SPEED_BATCH, TOTAL_FRAMES - 1) }, (_, k) => k + 2);
-    await Promise.all(batchNums.map(async n => {
-      const img = await probeWithRetry(n, 2);
-      if (img) frames[n - 1] = img;
-    }));
-    const elapsed = performance.now() - t0;
-    rebuildLoadedFrameIndex();
-    return elapsed > 4000 ? 3 : elapsed > 2000 ? 2 : 1;
-  }
-
-  async function loadRemainingFrames(skip) {
-    const BATCH_END = 11;
-    const toLoad = [];
-    for (let i = BATCH_END + 1; i <= TOTAL_FRAMES; i++) {
-      if (skip <= 1 || i % skip === 0) toLoad.push(i);
-    }
-    let cursor = 0;
-    const failed = [];
-    
-    
-    const CONCURRENCY = isSlowHardware ? 2 : 6;
-    const worker = async () => {
-      while (cursor < toLoad.length) {
-        const n = toLoad[cursor++];
-        if (frames[n - 1]?.naturalWidth) continue;
-        const img = await probeWithRetry(n, 2);
-        if (img) { frames[n - 1] = img; rebuildLoadedFrameIndex(); }
-        else failed.push(n);
-      }
-    };
-    await Promise.all(Array.from({ length: CONCURRENCY }, worker));
-    for (const n of [...failed]) {
-      const img = await probeWithRetry(n, 2);
-      if (img) { frames[n - 1] = img; rebuildLoadedFrameIndex(); }
-    }
-  }
-
-  window.addEventListener('resize', resizeCanvas);
-  if (!textOnlyReveal && canvas) {
-    totalFrames = TOTAL_FRAMES;
-    loadedFrameIdx = Array.from({ length: TOTAL_FRAMES }, (_, i) => i);
-    resizeCanvas();
-    drawFrame(0);
-  }
-
-  const FRAME_PROGRESS_AT_EXIT_START = 0.82;
-
-  function drawFrameAtProgress(progress) {
-    if (textOnlyReveal || !canvas) return;
-    const clamped = Math.min(1, Math.max(0, progress));
-    const idx = Math.round(clamped * (TOTAL_FRAMES - 1));
-    drawFrame(idx);
-  }
-
-  
-  const revealOverlay = document.getElementById('reveal-overlay');
-
-  const exitTl = gsap.timeline({ paused: true });
-  if (revealWrap) {
-    if (!textOnlyReveal) {
-      exitTl.to(revealWrap, { y: '-50vh', ease: 'none', duration: 1 }, 0);
-      if (revealOverlay) {
-        exitTl.to(revealOverlay, { opacity: 0.7, ease: 'none', duration: 0.66 }, 0);
-        if (!isMobile && (CSS.supports('backdrop-filter', 'blur(1px)') || CSS.supports('-webkit-backdrop-filter', 'blur(1px)'))) {
-          gsap.set(revealOverlay, { backdropFilter: 'blur(0px)' });
-          exitTl.to(revealOverlay, { backdropFilter: 'blur(16px)', ease: 'none', duration: 1 }, 0);
-        }
-      }
-    } else {
-      exitTl.to(revealWrap, { y: '-30vh', ease: 'none', duration: 1 }, 0);
-    }
-  }
-  if (phraseChars.length) {
-    const phraseExitTl = gsap.timeline({ paused: true });
-    phraseExitTl.to(phraseChars, {
-      opacity: 0,
-      duration: 0.2,
-      ease: 'none',
-      immediateRender: false,
-      stagger: { each: 0.01, from: 'end' },
-    });
-    ScrollTrigger.create({
-      trigger: '#section-after',
-      start: 'top bottom',
-      end: 'top top',
-      scrub: true,
-      animation: phraseExitTl,
-    });
-  }
-
-  if (revealWrap) {
-    ScrollTrigger.create({
-      trigger: '#section-after',
-      start: 'top bottom',
-      end: 'top top',
-      scrub: true,
-      animation: exitTl,
-      onUpdate: (self) => {
-        const exitFrameProgress = FRAME_PROGRESS_AT_EXIT_START + (self.progress * (1 - FRAME_PROGRESS_AT_EXIT_START));
-        drawFrameAtProgress(exitFrameProgress);
-      },
-      onLeave: () => drawFrameAtProgress(1),
-      onLeaveBack: () => drawFrameAtProgress(FRAME_PROGRESS_AT_EXIT_START),
-    });
-  }
-
-  
-  setupAboutSection();
 }
 
 function setupAboutSection() {
@@ -481,27 +268,10 @@ function setupAboutSection() {
     ease: 'none',
     scrollTrigger: {
       trigger: aboutSub,
-      start: 'top 82%',
-      end: 'top 62%',
+      start: 'top 80%',
+      end: 'top 60%',
       scrub: true,
     },
-  });
-
-  aboutSub?.querySelectorAll('.about-card').forEach((card, index) => {
-    gsap.set(card, isMobile ? { opacity: 0, y: 24 } : { opacity: 0, y: 28, filter: 'blur(10px)' });
-    gsap.to(card, {
-      opacity: 1,
-      y: 0,
-      ...(isMobile ? {} : { filter: 'blur(0px)' }),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: card,
-        start: 'top 86%',
-        end: 'top 68%',
-        scrub: true,
-      },
-      delay: index * 0.04,
-    });
   });
 
   
@@ -546,7 +316,7 @@ function setupProjectsSection() {
   let _projectsInView = false;
   let _skillsInView = false;
   let _lineReady = false;
-  const LINE_FIRST_PROJECT_PROGRESS = 0.17;
+  const LINE_FIRST_PROJECT_PROGRESS = 0.25;
   gsap.set(card, { opacity: 0 });
   gsap.set(preview, { opacity: 0 });
 
@@ -567,11 +337,15 @@ function setupProjectsSection() {
     const ready = progress >= LINE_FIRST_PROJECT_PROGRESS;
     if (ready === _lineReady) return;
     _lineReady = ready;
-    if (_lineReady && _projectsInView && !isInSkillsSection()) onProjectsScroll();
+    if (_lineReady && _projectsInView && !isInSkillsSection()) {
+      onProjectsScroll();
+    } else if (!_lineReady) {
+      forceHidePreview();
+    }
   }
 
   function showPreviewPanel() {
-    if (!_projectsInView || isInSkillsSection()) return;
+    if (!_projectsInView || isInSkillsSection() || !_lineReady) return;
     preview.classList.add('visible');
     gsap.to(preview, { opacity: 1, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
     gsap.to(card, { opacity: 1, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
@@ -590,7 +364,7 @@ function setupProjectsSection() {
   }
 
   function syncPreviewVisibility() {
-    if (_projectsInView && !isInSkillsSection() && currentIdx >= 0) {
+    if (_projectsInView && !isInSkillsSection() && currentIdx >= 0 && _lineReady) {
       showPreviewPanel();
     } else {
       forceHidePreview();

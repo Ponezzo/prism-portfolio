@@ -7,7 +7,7 @@
  * The agent will:
  * 1. Read Figma Variables from the linked file (design/tokens.json → meta.figmaFileKey)
  * 2. Update design/tokens.json and/or content/*.json
- * 3. Run: npm run apply:tokens
+ * 3. Run: npm run apply:all
  * 4. Commit/push if you ask
  */
 import fs from 'node:fs';

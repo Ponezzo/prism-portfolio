@@ -20,87 +20,35 @@ window.__HOME__ = {
       "taglinePlain": "기본적으로 사용자를 우선으로 한 기획과 개발을 합니다."
     },
     "about": {
-      "textHtml": "기능의 수가 아니라, 사용자가 체감하는 가치로 제품을 판단합니다.",
+      "textHtml": "기능의 수가 아니라,\n사용자가 체감하는 가치로 제품을 판단합니다.",
+      "sub": "<ul class=\"about-facts\"><li>삼성생산기술연구소 · 스마트팩토리 대시보드 프로젝트 (2위 - 2025.05)</li><li>SSAFY AI · SW 아카데미 (2024.07 – 2025.06)</li><li>숭실대학교 (2019 – 2024)</li><li>해커스교육그룹 기획 인턴 (2022)</li><li>Saint Louis University (2016 - 2018)</li><li>SQLD · ADsP</li></ul>",
       "photoSrc": "assets/images/profile/taegeon.jpg",
-      "photoAlt": "Taegeon Park",
-      "cards": {
-        "major": {
-          "text": "경영학과 및\n벤처중소기업학과 전공",
-          "image": "assets/images/about/major-bg.png"
-        },
-        "certifications": [
-          {
-            "name": "ADsP",
-            "image": "assets/images/about/adsp.png"
-          },
-          {
-            "name": "SQLD",
-            "image": "assets/images/about/sqld.png"
-          }
-        ],
-        "education": [
-          {
-            "title": "삼성 (2024.07 ~ 2025.06)",
-            "detail": "청년 AI/소프트웨어 아카데미",
-            "image": "assets/images/about/ssafy.png"
-          },
-          {
-            "title": "숭실대학교 (서울)",
-            "detail": "(2019.03 ~ 2024.02)",
-            "image": "assets/images/about/soongsil.png"
-          },
-          {
-            "title": "Saint Louis University (미국)",
-            "detail": "(2016.05 ~ 2018.05)",
-            "image": "assets/images/about/saint-louis.png"
-          }
-        ],
-        "awards": [
-          {
-            "year": "2025",
-            "title": "SSAFY 기업연계 프로젝트 (우수상)",
-            "org": "삼성전자주식회사",
-            "image": "assets/images/about/samsung.png"
-          },
-          {
-            "year": "2024",
-            "title": "Eduflex 인사담당",
-            "org": "Eduflex",
-            "image": "assets/images/about/eduflex.png"
-          },
-          {
-            "year": "2022",
-            "title": "챔프스터디(해커스) 기획 인턴",
-            "org": "챔프스터디",
-            "image": "assets/images/about/champstudy.png"
-          }
-        ]
-      }
+      "photoAlt": "Taegeon Park"
     },
     "skills": {
       "subtitle": "Skills",
-      "text": "사용자 경험과 데이터를 기준으로 제품을 기획하고, Vue·React·Three.js로 프로토타입까지 직접 검증합니다.",
+      "text": "사용자 경험과 데이터를 기준으로 기획하고,\n주인의식을 가지고 직접 검증합니다.",
       "groups": [
         {
-          "id": "frontend",
-          "title": "Frontend",
+          "id": "develop",
+          "title": "Develop",
           "items": [
-            "Vue 3",
+            "Python",
             "React",
             "React Native",
             "Next.js",
             "JavaScript",
             "TypeScript",
-            "HTML / CSS",
-            "Three.js"
+            "Three.js",
+            "Android Studio"
           ]
         },
         {
           "id": "tools",
           "title": "Tools",
           "items": [
-            "Git",
-            "GitHub",
+            "Git / GitHub",
+            "Slack",
             "Figma",
             "Notion",
             "Jira"
@@ -112,7 +60,6 @@ window.__HOME__ = {
           "items": [
             "UI/UX Design",
             "MVP Based Planning",
-            "User Interview",
             "AI (Claude, OPenAI, Gemini)"
           ]
         }
@@ -186,9 +133,9 @@ window.__HOME__ = {
     },
     "skills": {
       "left": {
-        "width": "60%",
-        "paddingLeft": "8rem",
-        "paddingTop": "15vh"
+        "width": "66%",
+        "paddingLeft": "clamp(2rem, 10vw, 10rem)",
+        "paddingTop": "12vh"
       }
     }
   }

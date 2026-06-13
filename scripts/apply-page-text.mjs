@@ -19,6 +19,35 @@ function lineContent(line) {
   return line.replace(/^\t+/, '').trimEnd();
 }
 
+/** Strip page-text line-break markers and expand \\n */
+function expandLineBreaks(text) {
+  let line = text;
+  if (line.startsWith('\\') && !line.startsWith('\\\\')) line = line.slice(1);
+  if (line.endsWith('\\') && line.length > 1) line = line.slice(0, -1).trimEnd();
+  return line.replace(/\\n/g, '\n');
+}
+
+function joinPageLines(rawLines) {
+  return rawLines
+    .map(expandLineBreaks)
+    .filter((line) => line.length > 0)
+    .join('\n');
+}
+
+function splitAboutLines(lines) {
+  if (!lines.length) return { title: '', facts: [] };
+  const titleLines = [lines[0]];
+  let i = 1;
+  while (i < lines.length && lines[i].startsWith('\\')) {
+    titleLines.push(lines[i]);
+    i += 1;
+  }
+  return {
+    title: joinPageLines(titleLines),
+    facts: lines.slice(i),
+  };
+}
+
 function parsePageText(raw) {
   const sections = {};
   let current = null;
@@ -87,94 +116,56 @@ function applySections(sections, home) {
   }
 
   if (sections.About) {
-    const ABOUT_IMG = 'assets/images/about/';
-    const CERT_IMAGES = {
-      ADsP: `${ABOUT_IMG}adsp.png`,
-      ADSP: `${ABOUT_IMG}adsp.png`,
-      SQLD: `${ABOUT_IMG}sqld.png`,
-    };
-
-    let textHtml = null;
-    const cards = {
-      major: null,
-      certifications: [],
-      education: [],
-      awards: [],
-    };
-
-    for (const { depth, text } of sections.About.lines) {
-      if (depth !== 1 || !text) continue;
-      if (textHtml == null) {
-        textHtml = text;
-        continue;
-      }
-
-      const colon = text.indexOf(':');
-      if (colon === -1) continue;
-      const type = text.slice(0, colon).trim();
-      const value = text.slice(colon + 1).trim();
-      if (!value) continue;
-
-      if (type === 'major') {
-        cards.major = {
-          text: value.replace(/\\n/g, '\n'),
-          image: `${ABOUT_IMG}major-bg.png`,
-        };
-      } else if (type === 'cert') {
-        const image = CERT_IMAGES[value] ?? `${ABOUT_IMG}${value.toLowerCase()}.png`;
-        cards.certifications.push({ name: value, image });
-      } else if (type === 'edu') {
-        const [title, detail = '', imageFile = ''] = value.split('|').map((part) => part.trim());
-        cards.education.push({
-          title: title.replace(/\\n/g, '\n'),
-          detail: detail.replace(/\\n/g, '\n'),
-          image: imageFile ? `${ABOUT_IMG}${imageFile}` : '',
-        });
-      } else if (type === 'award') {
-        const [year, title, org, imageFile = ''] = value.split('|').map((part) => part.trim());
-        cards.awards.push({
-          year,
-          title,
-          org,
-          image: imageFile ? `${ABOUT_IMG}${imageFile}` : '',
-        });
-      }
-    }
-
+    const rawLines = takeOneTabLines(sections.About);
+    const { title, facts } = splitAboutLines(rawLines);
+    const sub = facts.length
+      ? `<ul class="about-facts">${facts.map((line) => `<li>${expandLineBreaks(line).replace(/^-\s*/, '')}</li>`).join('')}</ul>`
+      : undefined;
     content.about = {
       ...(content.about ?? {}),
-      ...(textHtml != null ? { textHtml } : {}),
+      ...(title ? { textHtml: title } : {}),
+      ...(sub != null ? { sub } : {}),
     };
-    if (cards.major || cards.certifications.length || cards.education.length || cards.awards.length) {
-      content.about.cards = cards;
-      delete content.about.sub;
-    }
   }
 
   if (sections.Skills) {
+    const lines = sections.Skills.lines;
     const skills = { subtitle: '', text: '', groups: [] };
-    let phase = 0;
-    let group = null;
 
-    for (const { depth, text } of sections.Skills.lines) {
-      if (depth === 1) {
-        if (phase === 0) {
-          skills.subtitle = text;
-          phase = 1;
-        } else if (phase === 1) {
-          skills.text = text;
-          phase = 2;
-        } else {
-          group = {
-            id: slugify(text),
-            title: text,
-            items: [],
-          };
-          skills.groups.push(group);
-        }
-      } else if (depth === 2 && group) {
-        group.items.push(text);
+    let i = 0;
+    while (i < lines.length && lines[i].depth !== 1) i += 1;
+    if (i < lines.length) {
+      skills.subtitle = lines[i].text;
+      i += 1;
+    }
+
+    const bodyParts = [];
+    while (i < lines.length && lines[i].depth === 1) {
+      let j = i + 1;
+      while (j < lines.length && lines[j].depth > 1) j += 1;
+      const hasChildren = lines.slice(i + 1, j).some((line) => line.depth === 2);
+      if (hasChildren) break;
+      bodyParts.push(lines[i].text);
+      i += 1;
+    }
+    skills.text = joinPageLines(bodyParts);
+
+    while (i < lines.length) {
+      if (lines[i].depth !== 1) {
+        i += 1;
+        continue;
       }
+      const group = {
+        id: slugify(lines[i].text),
+        title: lines[i].text,
+        items: [],
+      };
+      i += 1;
+      while (i < lines.length && lines[i].depth === 2) {
+        group.items.push(lines[i].text);
+        i += 1;
+      }
+      skills.groups.push(group);
     }
 
     content.skills = skills;

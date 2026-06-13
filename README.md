@@ -10,7 +10,7 @@ Taegeon Park personal portfolio — scroll-driven landing with motion-rich proje
 ## Structure
 
 - Lenis + GSAP ScrollTrigger scroll experience
-- Preloader → Hero → About → Projects → Skills → Footer
+- Landing → About → Projects → Skills → Footer
 - `/works/` project grid subpage
 
 ## Page text (editable)

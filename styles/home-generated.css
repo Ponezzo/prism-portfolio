@@ -19,5 +19,5 @@
   max-width: 28rem;
 }
 .about-text { padding-left: 8rem; padding-right: 4rem; }
-.skills-left { width: 60%; padding-left: 8rem; padding-top: 15vh; }
+.skills-left { width: 66%; padding-left: clamp(2rem, 10vw, 10rem); padding-top: 12vh; }
 

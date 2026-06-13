@@ -29,7 +29,7 @@ alwaysApply: false
 3. Figma Variables → `design/tokens.json` 색상 매핑:
    - `color/accent-hot` → `color.accentHot` / `--prism-cyan`
    - `color/accent-pink` → `color.accentPink` / `--prism-magenta`
-4. `npm run apply:all` (home CSS/JS + tokens.css 생성)
+4. `npm run apply:all` (home CSS/JS 생성)
 5. 커밋/푸시는 사용자가 명시할 때만
 
 ## 로컬 파일

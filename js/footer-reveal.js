@@ -189,25 +189,25 @@
       footerEl.classList.add(readyClass);
 
       var holdRatio = cfg.holdRatio != null ? cfg.holdRatio : 0.88;
-      var fadeTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: cfg.transition,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.55,
-          onLeave: function () {
-            footerEl.style.visibility = 'hidden';
-            footerEl.classList.remove(readyClass);
-          },
-          onEnterBack: function () {
-            footerEl.style.visibility = 'visible';
-            footerEl.classList.add(readyClass);
-            gsap.set(footerEl, { opacity: 1 });
-          },
+
+      function landingHeaderOpacity(progress) {
+        if (progress <= holdRatio) return 1;
+        var t = (progress - holdRatio) / (1 - holdRatio);
+        return Math.max(0, 1 - t);
+      }
+
+      ScrollTrigger.create({
+        trigger: cfg.transition,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.55,
+        onUpdate: function (self) {
+          var opacity = landingHeaderOpacity(self.progress);
+          gsap.set(footerEl, { opacity: opacity, visibility: 'visible' });
+          footerEl.classList.add(readyClass);
+          footerEl.style.pointerEvents = opacity > 0.05 ? 'auto' : 'none';
         },
       });
-      fadeTl.fromTo(footerEl, { opacity: 1 }, { opacity: 1, duration: holdRatio, ease: 'none' }, 0);
-      fadeTl.to(footerEl, { opacity: 0, duration: 1 - holdRatio, ease: 'power2.inOut' }, holdRatio);
       return;
     }
 
@@ -278,9 +278,9 @@
       parallaxLoop();
     }
 
-    function hideFooterBlock() {
+    function hideFooterBlock(force) {
       blockVisible = false;
-      if (cfg.hideOnLeave === false) return;
+      if (cfg.hideOnLeave === false && !force) return;
       footerEl.style.visibility = 'hidden';
       var readyClass = cfg.readyClass || 'site-header--ready';
       footerEl.classList.remove(readyClass);
@@ -390,7 +390,7 @@
           showFooterBlock();
           return;
         }
-        hideFooterBlock();
+        hideFooterBlock(true);
       },
     });
   };
